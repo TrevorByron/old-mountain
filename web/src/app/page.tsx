@@ -127,7 +127,7 @@ export default function HomePage() {
   return (
     <div>
       <section
-        className="relative isolate flex min-h-[90vh] items-center justify-center overflow-hidden px-5 py-12 md:min-h-screen"
+        className="relative isolate flex h-screen items-center justify-center overflow-hidden p-4"
         aria-label="Old Mountain safari hero"
       >
         <div
@@ -159,11 +159,11 @@ export default function HomePage() {
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute inset-5 z-10 rounded-[2px] border border-[var(--dust)]/45"
+          className="pointer-events-none absolute inset-0 z-10 rounded-[2px] border-[20px] border-[var(--dust)]"
           aria-hidden="true"
         />
 
-        <div className="mx-auto flex w-full max-w-[980px] flex-col items-center gap-14 text-center text-[var(--dust)]">
+        <div className="relative z-20 mx-auto flex w-full max-w-[980px] flex-col items-center gap-14 px-9 text-center text-[var(--dust)]">
           <div className="flex flex-col items-center text-center">
             <p className="font-display text-[clamp(3rem,10.3vw,10.42rem)] leading-[0.92] tracking-[0.01em]">
               OLD MOUNTAIN
