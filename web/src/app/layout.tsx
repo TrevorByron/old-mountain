@@ -3,14 +3,28 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Brand Name",
-    template: "%s | Brand Name"
+    default: "Old Mountain",
+    template: "%s | Old Mountain"
   },
-  description: "High-converting marketing website template for lead generation.",
+  description: "Old Mountain tours and explorations.",
   openGraph: {
-    title: "Brand Name",
-    description: "High-converting marketing website template for lead generation.",
-    type: "website"
+    title: "Old Mountain",
+    description: "Old Mountain tours and explorations.",
+    type: "website",
+    images: [
+      {
+        url: "/unfurling.png",
+        width: 1200,
+        height: 630,
+        alt: "Old Mountain Tours and Explorations"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Old Mountain",
+    description: "Old Mountain tours and explorations.",
+    images: ["/unfurling.png"]
   },
   robots: {
     index: true,
