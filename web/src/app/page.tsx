@@ -10,15 +10,15 @@ const roboto = Roboto({ subsets: ["latin"], weight: ["600"] });
 const cormorant = Cormorant_Garamond({ subsets: ["latin"], style: ["normal", "italic"], weight: ["400", "500", "600"] });
 const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 const HERO_BG_IMAGES = [
-  "/hero/waterfall.png",
-  "/hero/defender-bw.png",
-  "/hero/elephant-closeup.png",
-  "/hero/giraffes-kid.png",
-  "/hero/campfire-night.png",
-  "/hero/elephants-trail.png",
-  "/hero/zebras-field.png",
-  "/hero/lion-resting.png",
-  "/hero/motos.png"
+  "/hero/waterfall.webp",
+  "/hero/defender-bw.webp",
+  "/hero/elephant-closeup.webp",
+  "/hero/giraffes-kid.webp",
+  "/hero/campfire-night.webp",
+  "/hero/elephants-trail.webp",
+  "/hero/zebras-field.webp",
+  "/hero/lion-resting.webp",
+  "/hero/motos.webp"
 ];
 const HERO_CYCLE_MS = 6000;
 const HERO_FADE_MS = 900;
