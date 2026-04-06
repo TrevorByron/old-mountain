@@ -12,7 +12,6 @@ const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 const HERO_BG_IMAGES = [
   "/hero/waterfall.webp",
   "/hero/defender-bw.webp",
-  "/hero/elephant-closeup.webp",
   "/hero/giraffes-kid.webp",
   "/hero/campfire-night.webp",
   "/hero/elephants-trail.webp",
