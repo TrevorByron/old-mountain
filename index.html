@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Old Mountain Tours & Explorations</title>
   <meta name="description" content="Born and raised in East Africa, Jesse and Trevor Borden bring you the Tanzania that tourists never see. Custom safaris built on a lifetime of knowledge.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Old Mountain Tours & Explorations">
+  <meta property="og:description" content="Born and raised in East Africa, Jesse and Trevor Borden bring you the Tanzania that tourists never see. Custom safaris built on a lifetime of knowledge.">
+  <meta property="og:url" content="https://www.old-mountain.com/">
+  <meta property="og:image" content="https://www.old-mountain.com/photos/assets/Unfurling.png">
+  <meta property="og:image:alt" content="Old Mountain Tours and Explorations social preview image">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Old Mountain Tours & Explorations">
+  <meta name="twitter:description" content="Born and raised in East Africa, Jesse and Trevor Borden bring you the Tanzania that tourists never see. Custom safaris built on a lifetime of knowledge.">
+  <meta name="twitter:image" content="https://www.old-mountain.com/photos/assets/Unfurling.png">
+  <link rel="icon" type="image/png" href="photos/assets/favicon.png">
 
   <style>
     /* ─── Fonts ─────────────────────────────────────── */
@@ -1589,7 +1600,7 @@
         <div class="gallery-track-wrap">
           <div class="gallery-track">
             <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20250306-1-r8bt7k.jpg" alt="Manyara Ranch, Tanzania" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20230209-7-1sgydvs.jpg" alt="Dorobo Pioneer Camp" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20250306-1-d2wo8j-1.jpg" alt="Dorobo Pioneer Camp" loading="lazy"></div>
             <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20230314-7-m9u2tp.jpg" alt="Manyara Ranch landscape" loading="lazy"></div>
             <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20260115-1-cocxy6.jpg" alt="Morning at Pioneer Camp" loading="lazy"></div>
             <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20260115-1-ne19fb.jpg" alt="Manyara Ranch wilderness" loading="lazy"></div>
@@ -1836,7 +1847,13 @@
         } else {
           card.classList.add('active');
           lodgeInners.forEach(inner => inner.classList.remove('active'));
-          document.querySelector(`.lodge-gallery-inner[data-for="${lodge}"]`).classList.add('active');
+          const activeGallery = document.querySelector(`.lodge-gallery-inner[data-for="${lodge}"]`);
+          activeGallery.classList.add('active');
+          // Safari can skip lazy-loading images that start in display:none panels.
+          activeGallery.querySelectorAll('img[loading="lazy"]').forEach(img => {
+            img.loading = 'eager';
+            if (!img.complete) img.src = img.currentSrc || img.src;
+          });
           lodgeGallery.classList.add('open');
           setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
         }
