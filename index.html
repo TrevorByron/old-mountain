@@ -462,11 +462,27 @@
       right: 22px;
       bottom: 20px;
       z-index: 1;
-      font-size: clamp(1.28rem, 1.85vw, 1.75rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+    .manifesto-value-label {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.72rem;
       font-weight: 700;
-      line-height: 1.25;
-      letter-spacing: -0.01em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(240, 230, 211, 0.82);
+    }
+    .manifesto-value-title {
+      font-size: clamp(1.42rem, 2.05vw, 1.95rem);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.015em;
       color: var(--cream);
+      max-width: 22ch;
     }
 
     /* ─── About / Brothers ───────────────────────────── */
@@ -1612,6 +1628,7 @@
       .hero-content { padding: 0 40px 60px; }
       .manifesto-values { grid-template-columns: 1fr; }
       .manifesto-value-card { min-height: 300px; }
+      .manifesto-value-title { font-size: clamp(1.2rem, 5.2vw, 1.6rem); }
       .about-grid { grid-template-columns: 1fr; }
       .about-photo-side { height: 50vh; }
       .about-text-side { padding: 64px 40px; }
@@ -1828,15 +1845,24 @@
         <div class="manifesto-values">
           <article class="manifesto-value-card reveal reveal-delay-1">
             <img src="photos/about/h-water.jpg" alt="Traveler wading near a waterfall in Tanzania" loading="lazy">
-            <p class="manifesto-value-text">Adventures that transform and stay with you for life.</p>
+            <div class="manifesto-value-text">
+              <p class="manifesto-value-label">Transforming</p>
+              <p class="manifesto-value-title">Adventures that stay with you for life.</p>
+            </div>
           </article>
           <article class="manifesto-value-card reveal reveal-delay-2">
             <img src="photos/about/lengai.jpg" alt="Ol Doinyo Lengai at dusk in Tanzania" loading="lazy">
-            <p class="manifesto-value-text">Sparking curiosity, cultivating wonder.</p>
+            <div class="manifesto-value-text">
+              <p class="manifesto-value-label">Inspiring</p>
+              <p class="manifesto-value-title">Sparking curiosity and cultivating wonder.</p>
+            </div>
           </article>
           <article class="manifesto-value-card reveal reveal-delay-3">
             <img src="photos/safari/hadzabe/image_processing20260119-1-f4jh6l.jpg" alt="Hadzabe arrows carried by hand in Tanzania" loading="lazy">
-            <p class="manifesto-value-text">Connecting with people and place.</p>
+            <div class="manifesto-value-text">
+              <p class="manifesto-value-label">Grounding</p>
+              <p class="manifesto-value-title">Connecting with people and place.</p>
+            </div>
           </article>
         </div>
       </div>
