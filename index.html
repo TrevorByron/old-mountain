@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Old Mountain Tours & Explorations</title>
+  <meta name="description" content="Born and raised in East Africa, Jesse and Trevor Borden bring you the Tanzania that tourists never see. Custom safaris built on a lifetime of knowledge.">
+
+  <style>
+    /* ─── Fonts ─────────────────────────────────────── */
+    @font-face {
+      font-family: 'Sunday April';
+      src: url('fonts/sunday-april/sunday-april-regular.woff') format('woff'),
+           url('fonts/sunday-april/sunday-april-regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'awan-zaman';
+      src: url('fonts/awan-zaman/awan-zaman-regular.woff') format('woff'),
+           url('fonts/awan-zaman/awan-zaman-regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Chainprinter';
+      src: url('fonts/chainprinter/chainprinter-regular.woff') format('woff'),
+           url('fonts/chainprinter/chainprinter-regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    /* ─── Variables ──────────────────────────────────── */
+    :root {
+      --cream:    #F0E6D3;
+      --cream-dim: rgba(240, 230, 211, 0.55);
+      --dark:     #0E1209;
+      --deep:     #141A10;
+      --olive:    #2C3A22;
+      --gold:     #C4A96B;
+      --text-light: #F0E6D3;
+      --text-dark:  #1A1A14;
+      --muted:    rgba(240, 230, 211, 0.5);
+      --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    /* ─── Reset & Base ───────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--sans);
+      background: var(--dark);
+      color: var(--text-light);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--gold); color: var(--dark); }
+
+    /* ─── Nav ────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 48px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.35s ease, visibility 0.35s ease, background 0.5s ease, backdrop-filter 0.5s ease, padding 0.4s ease;
+    }
+    nav.visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    nav.scrolled {
+      background: rgba(14, 18, 9, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 16px 48px;
+      border-bottom: 1px solid rgba(240, 230, 211, 0.08);
+    }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.8;
+      transition: opacity 0.25s;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-cta {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid rgba(240, 230, 211, 0.5);
+      padding: 10px 24px;
+      color: var(--cream);
+      border-radius: 100px;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .nav-cta:hover {
+      background: var(--cream);
+      color: var(--dark);
+      border-color: var(--cream);
+    }
+
+    /* ─── Hero ───────────────────────────────────────── */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100dvh;
+      min-height: 600px;
+      overflow: hidden;
+      border: 16px solid var(--cream);
+      box-sizing: border-box;
+    }
+    .hero-slides {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-grain-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background-image: url('photos/grain/fine_grain_light.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 2.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hero-slide.active {
+      opacity: 1;
+    }
+    .hero-slide-bg {
+      position: absolute;
+      inset: -5%;
+      background-size: cover;
+      background-position: center;
+      animation: kenBurns 12s ease-in-out infinite alternate;
+    }
+    .hero-slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,14,7,0.52) 0%,
+        rgba(10,14,7,0.38) 35%,
+        rgba(10,14,7,0.62) 100%
+      );
+      z-index: 1;
+    }
+    @keyframes kenBurns {
+      0%   { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.1) translate(-1%, 1%); }
+    }
+
+    .hero-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 3;
+      padding: 80px 40px 100px;
+    }
+    .hero-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .hero-wordmark {
+      font-family: 'awan-zaman', var(--sans);
+      font-size: clamp(4.6rem, 10.3vw, 9.4rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--cream);
+      line-height: 0.96;
+      margin-bottom: 0px;
+      text-shadow: 0 3px 28px rgba(0,0,0,0.35);
+    }
+    .hero-script {
+      font-family: 'Sunday April', serif;
+      font-size: clamp(2rem, 3vw, 2.9rem);
+      color: var(--cream);
+      opacity: 0.9;
+      line-height: 1;
+      margin-bottom: 22px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.45);
+    }
+    .hero-dates-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: min(760px, 92vw);
+      margin: 0 auto 30px;
+    }
+    .hero-date {
+      flex: 1;
+      position: relative;
+      z-index: 2;
+      line-height: 1;
+    }
+    .hero-date:first-child {
+      text-align: right;
+      margin-right: -28px;
+    }
+    .hero-date:last-child {
+      text-align: left;
+      margin-left: -28px;
+    }
+    .hero-month {
+      font-family: 'Chainprinter', monospace;
+      font-size: 24px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(240, 230, 211, 0.86);
+      display: block;
+      margin-bottom: 0;
+    }
+    .hero-year {
+      font-family: 'Chainprinter', monospace;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--cream);
+      letter-spacing: 0.08em;
+      display: block;
+      line-height: 1;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.55);
+    }
+    .hero-emblem {
+      width: clamp(210px, 24vw, 280px);
+      height: clamp(210px, 24vw, 280px);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-emblem img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .hero-tagline {
+      font-family: var(--sans);
+      font-size: 18px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(240, 230, 211, 0.84);
+      line-height: 1.35;
+      max-width: 660px;
+      margin-bottom: 44px;
+      text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--cream);
+      color: var(--dark);
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border-radius: 100px;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-primary:hover { background: #fff; transform: translateY(-1px); }
+    .btn-ghost {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      transition: color 0.25s;
+    }
+    .btn-ghost:hover { color: var(--cream); }
+
+    .hero-controls {
+      position: absolute;
+      bottom: 72px;
+      right: 64px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 4;
+    }
+    .hero-btn {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      border: 1px solid rgba(240, 230, 211, 0.35);
+      background: rgba(14,18,9,0.3);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .hero-btn:hover {
+      background: rgba(196, 169, 107, 0.25);
+      border-color: var(--gold);
+    }
+    .hero-btn svg { width: 16px; height: 16px; stroke: var(--cream); fill: none; stroke-width: 2; }
+
+    .hero-dots {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 4;
+    }
+    .hero-dot {
+      width: 32px; height: 2px;
+      background: rgba(240, 230, 211, 0.3);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.3s, width 0.3s;
+    }
+    .hero-dot.active {
+      background: var(--cream);
+      width: 48px;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      right: 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 4;
+    }
+    /* (scroll hint replaced by hero-controls area) */
+
+    /* ─── Section Base ───────────────────────────────── */
+    section { position: relative; }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 64px;
+    }
+
+    /* ─── Manifesto ──────────────────────────────────── */
+    #manifesto {
+      background: var(--dark);
+      padding: 140px 0;
+      overflow: hidden;
+    }
+    .manifesto-inner {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .manifesto-label {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding-top: 8px;
+    }
+    .manifesto-text {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 300;
+      line-height: 1.35;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+    }
+    .manifesto-text strong {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ─── About / Brothers ───────────────────────────── */
+    #about {
+      background: var(--cream);
+      color: var(--text-dark);
+      padding: 0;
+      overflow: hidden;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+    .about-photo-side {
+      position: relative;
+      overflow: hidden;
+    }
+    .about-photo-side img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .about-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(135deg, rgba(44,58,34,0.3) 0%, transparent 60%),
+        url('photos/grain/fine_grain_light.png');
+      background-size: cover, cover;
+      background-position: center, center;
+      background-repeat: no-repeat, no-repeat;
+    }
+    .about-text-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 80px 100px 80px;
+    }
+    .section-eyebrow {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+    .about-headline {
+      font-size: clamp(2.4rem, 3.5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--text-dark);
+      margin-bottom: 32px;
+    }
+    .about-headline em {
+      font-style: normal;
+      font-family: 'SundayApril', serif;
+      font-weight: 400;
+    }
+    .about-body {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: rgba(26, 26, 20, 0.75);
+      max-width: 520px;
+    }
+    .about-body p + p { margin-top: 20px; }
+    .about-names {
+      display: flex;
+      gap: 40px;
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(26, 26, 20, 0.15);
+    }
+    .about-name-card {}
+    .about-name-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(26, 26, 20, 0.45);
+      margin-bottom: 4px;
+    }
+    .about-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      letter-spacing: -0.01em;
+    }
+
+    /* ─── Stats Bar ──────────────────────────────────── */
+    .stats-bar {
+      background: var(--olive);
+      padding: 56px 0;
+    }
+    .stats-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 64px;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 0 40px;
+    }
+    .stat-item + .stat-item {
+      border-left: 1px solid rgba(240, 230, 211, 0.15);
+    }
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--cream);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(240, 230, 211, 0.55);
+    }
+
+    /* ─── Tanzania Section ───────────────────────────── */
+    #tanzania {
+      background: var(--dark);
+      padding: 140px 0 0;
+    }
+    .tanzania-header {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 64px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+    }
+    .section-title {
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--cream);
+    }
+    .section-title em {
+      font-style: normal;
+      font-family: 'SundayApril', serif;
+      font-weight: 400;
+      font-size: 1.05em;
+    }
+    .section-desc {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: rgba(240, 230, 211, 0.6);
+      align-self: end;
+    }
+
+    .photo-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 400px 300px;
+      gap: 4px;
+      overflow: hidden;
+    }
+    .photo-grid::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      background-image: url('photos/grain/fine_grain_light.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.6;
+    }
+    .photo-tile {
+      overflow: hidden;
+      position: relative;
+    }
+    .photo-tile:first-child {
+      grid-row: 1 / 3;
+    }
+    .photo-tile img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+    .photo-tile:hover img { transform: scale(1.05); }
+    .photo-tile::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(14,18,9,0.15);
+      transition: background 0.4s;
+    }
+    .photo-tile:hover::after { background: rgba(14,18,9,0.05); }
+
+    /* ─── Itinerary ──────────────────────────────────── */
+    #itinerary {
+      background: var(--cream);
+      color: var(--text-dark);
+      padding: 140px 0;
+    }
+    .itinerary-header {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 64px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+    }
+    .itinerary-title {
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--text-dark);
+    }
+    .itinerary-title em {
+      font-style: normal;
+      font-family: 'SundayApril', serif;
+      font-weight: 400;
+    }
+    .itinerary-desc {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: rgba(26, 26, 20, 0.6);
+      align-self: end;
+    }
+    .itinerary-desc strong { color: var(--text-dark); font-weight: 700; }
+
+    /* Day-by-day */
+    .itinerary-days {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 64px;
+    }
+    .day-row {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 0;
+      border-top: 1px solid rgba(26, 26, 20, 0.12);
+      padding: 28px 0;
+      align-items: start;
+    }
+    .day-row:last-child { border-bottom: 1px solid rgba(26, 26, 20, 0.12); }
+    .day-num {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding-top: 4px;
+    }
+    .day-content {}
+    .day-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .day-desc {
+      font-size: 0.9rem;
+      color: rgba(26, 26, 20, 0.55);
+      line-height: 1.5;
+    }
+    .day-lodge {
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      color: var(--olive);
+      font-weight: 600;
+      padding-top: 4px;
+      text-align: right;
+      min-width: 200px;
+    }
+
+    /* Lodge gallery */
+    .gallery-meta {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 64px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .gallery-label {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .gallery-hint {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(240, 230, 211, 0.2);
+    }
+    .gallery-track-wrap { position: relative; }
+    .gallery-track-wrap::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 100px;
+      background: linear-gradient(to left, var(--dark), transparent);
+      pointer-events: none;
+    }
+    .gallery-track {
+      display: flex;
+      gap: 3px;
+      overflow-x: auto;
+      padding: 0 64px 48px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      cursor: grab;
+    }
+    .gallery-track:active { cursor: grabbing; }
+    .gallery-track::-webkit-scrollbar { display: none; }
+    .gallery-photo {
+      flex: 0 0 auto;
+      height: 420px;
+      overflow: hidden;
+    }
+    .gallery-photo img {
+      height: 100%;
+      width: auto;
+      min-width: 180px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+      pointer-events: none;
+    }
+    .gallery-photo:hover img { transform: scale(1.03); }
+
+    /* Lodges highlight */
+    .lodges-grid {
+      max-width: 1280px;
+      margin: 64px auto 0;
+      padding: 0 64px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    .lodge-card {
+      background: var(--olive);
+      padding: 36px 32px 28px;
+      color: var(--cream);
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      transition: background 0.25s;
+    }
+    .lodge-card:nth-child(even) { background: #3D5A2E; }
+    .lodge-card:hover { background: #364A28; }
+    .lodge-card:nth-child(even):hover { background: #476B35; }
+    .lodge-card.active { background: #1E2B18; }
+    .lodge-card:nth-child(even).active { background: #1E2B18; }
+    .lodge-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .lodge-card:hover::after,
+    .lodge-card.active::after { transform: scaleX(1); }
+    .lodge-night {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(240, 230, 211, 0.5);
+      margin-bottom: 12px;
+    }
+    .lodge-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+    .lodge-region {
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+    .lodge-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(240, 230, 211, 0.35);
+      transition: color 0.2s;
+    }
+    .lodge-card:hover .lodge-toggle,
+    .lodge-card.active .lodge-toggle { color: var(--gold); }
+    .lodge-toggle svg {
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .lodge-card.active .lodge-toggle svg { transform: rotate(180deg); }
+
+    /* Lodge photo gallery */
+    .lodge-gallery {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .lodge-gallery.open { max-height: 580px; }
+    .lodge-gallery-inner { display: none; }
+    .lodge-gallery-inner.active {
+      display: block;
+      background: var(--dark);
+      border-top: 1px solid rgba(240, 230, 211, 0.07);
+    }
+
+    /* ─── Pricing ────────────────────────────────────── */
+    #pricing {
+      background: var(--deep);
+      padding: 140px 0;
+    }
+    .pricing-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+    .pricing-left {}
+    .pricing-eyebrow {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .pricing-title {
+      font-size: clamp(2.4rem, 4vw, 4rem);
+      font-weight: 800;
+      line-height: 0.95;
+      color: var(--cream);
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+    }
+    .pricing-title em {
+      font-style: normal;
+      font-family: 'SundayApril', serif;
+      font-weight: 400;
+    }
+    .pricing-body {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(240, 230, 211, 0.6);
+      margin-bottom: 40px;
+    }
+    .pricing-includes {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pricing-includes li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 0.9rem;
+      color: rgba(240, 230, 211, 0.7);
+    }
+    .pricing-includes li::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      background: rgba(196, 169, 107, 0.2);
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l2.5 2.5L9 1' stroke='%23C4A96B' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .pricing-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .price-card {
+      background: rgba(240, 230, 211, 0.04);
+      border: 1px solid rgba(240, 230, 211, 0.1);
+      border-radius: 16px;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .price-card.featured {
+      background: var(--olive);
+      border-color: var(--gold);
+    }
+    .price-card.featured::before {
+      content: 'Available Now';
+      position: absolute;
+      top: 20px; right: 20px;
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--dark);
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-weight: 700;
+    }
+    .price-label {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .price-trip-name {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+    .price-dates {
+      font-size: 0.85rem;
+      color: rgba(240, 230, 211, 0.5);
+      margin-bottom: 32px;
+    }
+    .price-amount {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .price-currency {
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--gold);
+    }
+    .price-number {
+      font-size: 4rem;
+      font-weight: 800;
+      color: var(--cream);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .price-per {
+      font-size: 0.85rem;
+      color: rgba(240, 230, 211, 0.5);
+      margin-bottom: 32px;
+    }
+    .price-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--cream);
+      color: var(--dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 14px 30px;
+      border-radius: 100px;
+      transition: background 0.25s;
+      width: 100%;
+      justify-content: center;
+    }
+    .price-cta:hover { background: #fff; }
+    .price-cta-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      border: 1px solid rgba(240, 230, 211, 0.2);
+      color: var(--cream);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 14px 30px;
+      border-radius: 100px;
+      transition: border-color 0.25s, background 0.25s;
+      margin-top: 12px;
+    }
+    .price-cta-ghost:hover {
+      border-color: var(--gold);
+      background: rgba(196, 169, 107, 0.08);
+    }
+
+    /* ─── Contact ────────────────────────────────────── */
+    #contact {
+      background: var(--olive);
+      padding: 120px 0;
+    }
+    .contact-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+    .contact-left {}
+    .contact-title {
+      font-size: clamp(2.4rem, 4vw, 4rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--cream);
+      margin-bottom: 24px;
+    }
+    .contact-title em {
+      font-style: normal;
+      font-family: 'SundayApril', serif;
+      font-weight: 400;
+    }
+    .contact-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(240, 230, 211, 0.65);
+      margin-bottom: 40px;
+    }
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.9rem;
+      color: rgba(240, 230, 211, 0.7);
+    }
+    .contact-icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(240, 230, 211, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-group label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(240, 230, 211, 0.5);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(240, 230, 211, 0.06);
+      border: 1px solid rgba(240, 230, 211, 0.15);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      color: var(--cream);
+      outline: none;
+      transition: border-color 0.25s;
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(240, 230, 211, 0.3); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group select option { background: var(--olive); color: var(--cream); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      background: var(--cream);
+      color: var(--dark);
+      border: none;
+      border-radius: 100px;
+      padding: 18px 40px;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      width: 100%;
+    }
+    .form-submit:hover { background: #fff; transform: translateY(-1px); }
+
+    /* ─── Footer ─────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      padding: 64px 0 40px;
+      border-top: 1px solid rgba(240, 230, 211, 0.08);
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 64px;
+    }
+    .footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(240, 230, 211, 0.08);
+      margin-bottom: 40px;
+    }
+    .footer-logo img {
+      height: 52px;
+      width: auto;
+    }
+    .footer-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(240, 230, 211, 0.45);
+      transition: color 0.25s;
+    }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(240, 230, 211, 0.3);
+    }
+    .footer-tagline {
+      font-family: 'SundayApril', serif;
+      font-size: 1.1rem;
+      color: rgba(240, 230, 211, 0.25);
+    }
+
+    /* ─── Scroll Animations ──────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── Responsive ─────────────────────────────────── */
+    @media (max-width: 1024px) {
+      nav { padding: 24px 32px; }
+      nav.scrolled { padding: 14px 32px; }
+      .nav-links { gap: 24px; }
+      .container { padding: 0 32px; }
+      .hero-content { padding: 0 40px 60px; }
+      .hero-controls { right: 40px; bottom: 60px; }
+      .manifesto-inner { grid-template-columns: 1fr; gap: 24px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-photo-side { height: 50vh; }
+      .about-text-side { padding: 64px 40px; }
+      .stats-inner { grid-template-columns: repeat(3, 1fr); padding: 0 32px; }
+      .tanzania-header { grid-template-columns: 1fr; gap: 32px; padding: 0 32px 60px; }
+      .photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .photo-tile:first-child { grid-row: auto; }
+      .itinerary-header { grid-template-columns: 1fr; gap: 32px; padding: 0 32px 60px; }
+      .itinerary-days { padding: 0 32px; }
+      .day-row { grid-template-columns: 60px 1fr; }
+      .day-lodge { display: none; }
+      .lodge-gallery.open { max-height: 520px; }
+      .gallery-meta { padding: 24px 32px 14px; }
+      .gallery-track { padding: 0 32px 40px; }
+      .gallery-photo { height: 360px; }
+      .lodges-grid { grid-template-columns: 1fr 1fr; padding: 0 32px; }
+      .pricing-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { padding: 0 32px; }
+      .footer-top { flex-direction: column; gap: 32px; text-align: center; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .hero-content { padding: 0 24px 80px; }
+      .hero-wordmark { letter-spacing: 0.04em; }
+      .hero-script { font-size: clamp(1.5rem, 8vw, 2.25rem); margin-bottom: 18px; }
+      .hero-dates-row { gap: 10px; margin-bottom: 24px; }
+      .hero-date:first-child { margin-right: -6px; }
+      .hero-date:last-child { margin-left: -6px; }
+      .hero-month { font-size: 1.1rem; }
+      .hero-year { font-size: 1.1rem; }
+      .hero-emblem { width: clamp(130px, 34vw, 170px); height: clamp(130px, 34vw, 170px); }
+      .hero-tagline { font-size: 0.92rem; letter-spacing: 0.1em; line-height: 1.45; }
+      .hero-controls { right: 24px; bottom: 80px; }
+      .stats-inner { grid-template-columns: 1fr; gap: 32px; }
+      .stat-item + .stat-item { border-left: none; border-top: 1px solid rgba(240, 230, 211, 0.15); padding-top: 32px; }
+      .photo-grid { grid-template-columns: 1fr; grid-template-rows: 300px 240px 240px; }
+      .photo-tile:nth-child(n+4) { display: none; }
+      .lodges-grid { grid-template-columns: 1fr; }
+      #manifesto, #itinerary, #pricing, #contact { padding: 80px 0; }
+      .manifesto-inner, .itinerary-header, .pricing-inner, .contact-inner { padding: 0 24px; }
+      .itinerary-days { padding: 0 24px; }
+      .lodge-gallery.open { max-height: 420px; }
+      .gallery-meta { padding: 20px 24px 12px; }
+      .gallery-hint { display: none; }
+      .gallery-track { padding: 0 24px 32px; }
+      .gallery-photo { height: 260px; }
+      .lodges-grid { padding: 0 24px; margin-top: 40px; }
+      .tanzania-header { padding: 0 24px 48px; }
+      .footer-inner { padding: 0 24px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ──────────────────────────────────────── -->
+  <nav id="main-nav">
+    <a href="#" class="nav-logo">
+      <img src="logo/Logo.svg" alt="Old Mountain Tours and Explorations">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#itinerary">The Journey</a></li>
+      <li><a href="#pricing">2027 Expeditions</a></li>
+      <li><a href="#contact">Inquire</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Save your spot</a>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-slides" id="heroSlides">
+      <div class="hero-slide active"><div class="hero-slide-bg" style="background-image: url('photos/hero/elephants-trail.webp')"></div></div>
+      <div class="hero-slide"><div class="hero-slide-bg" style="background-image: url('photos/hero/lion-resting.webp')"></div></div>
+      <div class="hero-slide"><div class="hero-slide-bg" style="background-image: url('photos/hero/giraffes-kid.webp')"></div></div>
+      <div class="hero-slide"><div class="hero-slide-bg" style="background-image: url('photos/hero/campfire-night.webp')"></div></div>
+      <div class="hero-slide"><div class="hero-slide-bg" style="background-image: url('photos/hero/zebras-field.webp')"></div></div>
+      <div class="hero-slide"><div class="hero-slide-bg" style="background-image: url('photos/hero/waterfall.webp')"></div></div>
+      <div class="hero-slide"><div class="hero-slide-bg" style="background-image: url('photos/hero/defender-bw.webp')"></div></div>
+    </div>
+    <div class="hero-grain-overlay" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="hero-brand">
+        <h1 class="hero-wordmark">OLD MOUNTAIN</h1>
+        <p class="hero-script">Tours and Explorations</p>
+
+        <div class="hero-dates-row">
+          <div class="hero-date">
+            <span class="hero-month">Feb</span>
+            <span class="hero-year">2027</span>
+          </div>
+          <div class="hero-emblem">
+            <img src="logo/Logo.svg" alt="Old Mountain emblem">
+          </div>
+          <div class="hero-date">
+            <span class="hero-month">Jul</span>
+            <span class="hero-year">2027</span>
+          </div>
+        </div>
+
+        <p class="hero-tagline">An 11-day safari in Tanzania.<br>Led by Trevor and Jesse Borden.</p>
+
+        <div class="hero-actions">
+          <a href="#itinerary" class="btn-primary">Save your spot</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-controls">
+      <button class="hero-btn" id="heroPrev" aria-label="Previous">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="hero-btn" id="heroNext" aria-label="Next">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+  </section>
+
+  <!-- ── Manifesto ─────────────────────────────────── -->
+  <section id="manifesto">
+    <div class="container">
+      <div class="manifesto-inner">
+        <p class="manifesto-label reveal">Our belief</p>
+        <p class="manifesto-text reveal reveal-delay-1">
+          There is a difference between taking a <strong>trip</strong> and having an
+          <strong>experience that stays with you for life.</strong> If you've spent years dreaming
+          about <strong>Africa,</strong> you already know which one you're after.<br><br>
+          We believe the best guides for that experience aren't just experts in Africa — they're
+          people who grew up <strong>calling it home.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About / Brothers ──────────────────────────── -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-photo-side">
+        <img src="photos/about/motos.webp" alt="Jesse and Trevor Borden in East Africa">
+        <div class="about-photo-overlay"></div>
+      </div>
+      <div class="about-text-side">
+        <p class="section-eyebrow reveal">Your guides along the journey.</p>
+        <h2 class="about-headline reveal reveal-delay-1">
+          Rooted There.<br>Fluent <em>Here.</em>
+        </h2>
+        <div class="about-body reveal reveal-delay-2">
+          <p>Jesse and Trevor Borden grew up in East Africa, went to school in the West, and have spent their lives moving comfortably between both. They understand what it means to dream about Africa from a distance — and they understand Africa itself in a way that only comes from growing up inside it. That combination is rare. It's the whole reason Old Mountain exists.</p>
+          <p>Jesse is a conservation ecologist with a PhD and over a decade of leading expeditions across Tanzania, Central America, and beyond. Trevor has been organizing and guiding people in East Africa since he was 19 years old. Together, they bring the kind of knowledge you can't find in a brochure — and the kind of care that makes you feel like you're traveling with family, not a vendor.</p>
+          <p>When you travel with Old Mountain, you're not handing your trip to a company. You're handing it to two people who have wanted to share this place their entire lives — and who will make sure you come home knowing you did it right.</p>
+        </div>
+        <div class="about-names reveal reveal-delay-3">
+          <div class="about-name-card">
+            <p class="about-name-title">Co-Founder</p>
+            <p class="about-name">Jesse Borden</p>
+          </div>
+          <div class="about-name-card">
+            <p class="about-name-title">Co-Founder</p>
+            <p class="about-name">Trevor Borden</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stats-inner">
+        <div class="stat-item reveal">
+          <p class="stat-number">11</p>
+          <p class="stat-label">Days in the wild</p>
+        </div>
+        <div class="stat-item reveal reveal-delay-1">
+          <p class="stat-number">4</p>
+          <p class="stat-label">Iconic regions</p>
+        </div>
+        <div class="stat-item reveal reveal-delay-2">
+          <p class="stat-number">2027</p>
+          <p class="stat-label">Next departures</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Tanzania ───────────────────────────────────── -->
+  <section id="tanzania">
+    <div class="tanzania-header">
+      <h2 class="section-title reveal">Tanzania Beautiful</h2>
+      <p class="section-desc reveal reveal-delay-2">
+        From the ancient traditions of the Hadzabe to the vast Serengeti plains, from the Ngorongoro Crater to the Ndutu wetlands — this journey is designed around what Old Mountain believes is the very best Tanzania has to offer. Built by people who call Africa home, it's an epic, deeply considered experience you can feel confident in.
+      </p>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-tile">
+        <img src="photos/hero/tarangiri27.jpg" alt="Zebras in Tarangire" loading="lazy">
+      </div>
+      <div class="photo-tile">
+        <img src="photos/hero/waterfall-2.jpg" alt="Waterfall in the Ngorongoro highlands" loading="lazy">
+      </div>
+      <div class="photo-tile">
+        <img src="photos/safari/hadzabe/image_processing20250714-1-75hh8w.jpg" alt="Life with the Hadzabe" loading="lazy">
+      </div>
+      <div class="photo-tile">
+        <img src="photos/safari/lions-paw/LP-scaled.jpg" alt="Lionspaw Lodge" loading="lazy">
+      </div>
+      <div class="photo-tile">
+        <img src="photos/safari/esirai-camp/ElizaPowell@EsiraiMarch22_2732.jpg" alt="Esirai camp in the trees" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Itinerary ──────────────────────────────────── -->
+  <section id="itinerary">
+    <div class="itinerary-header">
+      <h2 class="itinerary-title reveal">
+        The<br><em>Journey.</em><br>Eleven days.
+      </h2>
+      <div class="itinerary-desc reveal reveal-delay-2">
+        <p>This 11-day journey is operated in direct partnership with our longtime friends at Dorobo Safaris — arguably the finest safari operators in the region. We're working with Dorobo because their ethos resonates deeply with Old Mountain: unmatched field experience, deep local knowledge, and a steadfast commitment to caring for both the environment and the people who call it home.</p>
+      </div>
+    </div>
+
+    <div class="itinerary-days">
+      <div class="day-row reveal">
+        <span class="day-num">Day 01</span>
+        <div class="day-content">
+          <p class="day-title">Arrival into Arusha</p>
+          <p class="day-desc">International arrival, transfer and settle in. Your African adventure begins tonight.</p>
+        </div>
+        <span class="day-lodge">Tumbili Lodge</span>
+      </div>
+      <div class="day-row reveal">
+        <span class="day-num">Day 02</span>
+        <div class="day-content">
+          <p class="day-title">Half-day Arusha, afternoon to Manyara Ranch</p>
+          <p class="day-desc">Morning in town, then head north into the rift highlands to Manyara Ranch.</p>
+        </div>
+        <span class="day-lodge">Dorobo Pioneer Camp</span>
+      </div>
+      <div class="day-row reveal">
+        <span class="day-num">Day 03</span>
+        <div class="day-content">
+          <p class="day-title">Full day — Manyara Ranch activities</p>
+          <p class="day-desc">Walking, game drives, and time to absorb the rhythms of a working East African ranch.</p>
+        </div>
+        <span class="day-lodge">Dorobo Pioneer Camp</span>
+      </div>
+      <div class="day-row reveal">
+        <span class="day-num">Day 04</span>
+        <div class="day-content">
+          <p class="day-title">Drive to the Yaeda Valley — Hadzabe activities</p>
+          <p class="day-desc">Cross into the remote Yaeda Valley and spend the afternoon with the Hadzabe, one of the last hunter-gatherer peoples on earth.</p>
+        </div>
+        <span class="day-lodge">Dorobo Pioneer Camp</span>
+      </div>
+      <div class="day-row reveal">
+        <span class="day-num">Day 05</span>
+        <div class="day-content">
+          <p class="day-title">Full day with the Hadzabe</p>
+          <p class="day-desc">A rare and extraordinary day living alongside and learning from the Hadzabe community.</p>
+        </div>
+        <span class="day-lodge">Dorobo Pioneer Camp</span>
+      </div>
+      <div class="day-row reveal">
+        <span class="day-num">Day 06</span>
+        <div class="day-content">
+          <p class="day-title">Morning with the Hadzabe — drive to Ngorongoro</p>
+          <p class="day-desc">A final morning in the Yaeda Valley before transferring to the Ngorongoro highlands.</p>
+        </div>
+        <span class="day-lodge">Lionspaw Lodge</span>
+      </div>
+      <div class="day-row reveal">
+        <span class="day-num">Day 07</span>
+        <div class="day-content">
+          <p class="day-title">Full day — Ngorongoro Crater, game drives</p>
+          <p class="day-desc">Descend into the world's largest intact volcanic caldera, a natural amphitheater teeming with wildlife including the Big Five.</p>
+        </div>
+        <span class="day-lodge">Lionspaw Lodge</span>
+      </div>
+      <div class="day-row reveal">
+        <span class="day-num">Day 08</span>
+        <div class="day-content">
+          <p class="day-title">Full day — Ndutu area and plains, game drives</p>
+          <p class="day-desc">Enter the Ndutu wetlands, a calving ground for wildebeest and one of the most ecologically rich corners of the Serengeti ecosystem.</p>
+        </div>
+        <span class="day-lodge">Esirai Migration Camp</span>
+      </div>
+      <div class="day-row reveal">
+        <span class="day-num">Day 09</span>
+        <div class="day-content">
+          <p class="day-title">Central and Eastern Serengeti — game drives</p>
+          <p class="day-desc">Venture into the heart of the Serengeti. Vast skies, infinite plains, and the great migration on the move.</p>
+        </div>
+        <span class="day-lodge">Esirai Migration Camp</span>
+      </div>
+      <div class="day-row reveal">
+        <span class="day-num">Day 10</span>
+        <div class="day-content">
+          <p class="day-title">Ndutu or Serengeti — game drives</p>
+          <p class="day-desc">A final full day in the wilderness. Follow the wildlife, follow your instincts, follow the light.</p>
+        </div>
+        <span class="day-lodge">Esirai Migration Camp</span>
+      </div>
+      <div class="day-row reveal">
+        <span class="day-num">Day 11</span>
+        <div class="day-content">
+          <p class="day-title">Fly to Arusha — international departure</p>
+          <p class="day-desc">Morning flight back to Arusha. Farewell lunch at Tumbili Lodge before your international connection home.</p>
+        </div>
+        <span class="day-lodge">Tumbili Lodge (day room)</span>
+      </div>
+    </div>
+
+    <div class="lodges-grid">
+      <div class="lodge-card reveal" data-lodge="tumbili">
+        <p class="lodge-night">Nights 1 &amp; 11</p>
+        <p class="lodge-name">Tumbili Lodge</p>
+        <p class="lodge-region">Arusha</p>
+        <span class="lodge-toggle">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          View photos
+        </span>
+      </div>
+      <div class="lodge-card reveal reveal-delay-1" data-lodge="pioneer">
+        <p class="lodge-night">Nights 2 – 5</p>
+        <p class="lodge-name">Dorobo Pioneer Camp</p>
+        <p class="lodge-region">Manyara Ranch &amp; Yaeda Valley</p>
+        <span class="lodge-toggle">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          View photos
+        </span>
+      </div>
+      <div class="lodge-card reveal reveal-delay-2" data-lodge="lionspaw">
+        <p class="lodge-night">Nights 6 – 7</p>
+        <p class="lodge-name">Lionspaw Lodge</p>
+        <p class="lodge-region">Ngorongoro</p>
+        <span class="lodge-toggle">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          View photos
+        </span>
+      </div>
+      <div class="lodge-card reveal reveal-delay-3" data-lodge="esirai">
+        <p class="lodge-night">Nights 8 – 10</p>
+        <p class="lodge-name">Esirai Migration Camp</p>
+        <p class="lodge-region">Ndutu &amp; Serengeti</p>
+        <span class="lodge-toggle">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          View photos
+        </span>
+      </div>
+    </div>
+
+    <div class="lodge-gallery" id="lodge-gallery">
+
+      <div class="lodge-gallery-inner" data-for="tumbili">
+        <div class="gallery-meta">
+          <span class="gallery-label">Tumbili Lodge · Arusha</span>
+          <span class="gallery-hint">Drag to explore</span>
+        </div>
+        <div class="gallery-track-wrap">
+          <div class="gallery-track">
+            <div class="gallery-photo"><img src="photos/safari/tumbili-lodge/96c260_009518a416f94fe29e24df8e1d2c2e0e~mv2.avif" alt="Tumbili Lodge, Arusha" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/tumbili-lodge/96c260_66f620863cd349cf94637a16965a0b63~mv2.avif" alt="Tumbili Lodge interior" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/tumbili-lodge/d6edb5_1a916e0dfee34857b6f84e98f7991c96~mv2.avif" alt="Tumbili Lodge grounds" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/tumbili-lodge/d6edb5_88daa4d6fba04ad18c405d7d58616dc6~mv2.avif" alt="Tumbili Lodge garden" loading="lazy"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lodge-gallery-inner" data-for="pioneer">
+        <div class="gallery-meta">
+          <span class="gallery-label">Dorobo Pioneer Camp · Manyara Ranch &amp; Yaeda Valley</span>
+          <span class="gallery-hint">Drag to explore</span>
+        </div>
+        <div class="gallery-track-wrap">
+          <div class="gallery-track">
+            <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20250306-1-r8bt7k.jpg" alt="Manyara Ranch, Tanzania" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20230209-7-1sgydvs.jpg" alt="Dorobo Pioneer Camp" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20230314-7-m9u2tp.jpg" alt="Manyara Ranch landscape" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20260115-1-cocxy6.jpg" alt="Morning at Pioneer Camp" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20260115-1-ne19fb.jpg" alt="Manyara Ranch wilderness" loading="lazy"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lodge-gallery-inner" data-for="lionspaw">
+        <div class="gallery-meta">
+          <span class="gallery-label">Lionspaw Lodge · Ngorongoro</span>
+          <span class="gallery-hint">Drag to explore</span>
+        </div>
+        <div class="gallery-track-wrap">
+          <div class="gallery-track">
+            <div class="gallery-photo"><img src="photos/safari/lions-paw/GGM08384-scaled.jpg" alt="Ngorongoro Crater panorama" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Scenery_2-scaled.jpg" alt="Ngorongoro highlands" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/lions-paw/LP-scaled.jpg" alt="Lionspaw Lodge exterior" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Restaurant_1-scaled.jpg" alt="Lionspaw Lodge restaurant" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Family_2-scaled.jpg" alt="Lionspaw Lodge family suite" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Twin_1-scaled.jpg" alt="Lionspaw Lodge twin room" loading="lazy"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lodge-gallery-inner" data-for="esirai">
+        <div class="gallery-meta">
+          <span class="gallery-label">Esirai Migration Camp · Ndutu &amp; Serengeti</span>
+          <span class="gallery-hint">Drag to explore</span>
+        </div>
+        <div class="gallery-track-wrap">
+          <div class="gallery-track">
+            <div class="gallery-photo"><img src="photos/safari/esirai-camp/ElizaPowell@EsiraiMarch22_9593.jpg" alt="Wildlife near Esirai Camp" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/esirai-camp/ElizaPowell@Esirai_2710.jpg" alt="Esirai Camp exterior" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/esirai-camp/Esirai-north-.jpg" alt="Ndutu plains" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/esirai-camp/ElizaPowell@EsiraiMarch22_2732.jpg" alt="Esirai Migration Camp" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/esirai-camp/olmara-wildlife-@-James-Nassary-2391.jpg" alt="Wildlife, Ndutu" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/esirai-camp/EsiraiCamp@MartinHarvey00003.jpg" alt="Esirai Camp tents" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/esirai-camp/ElizaPowell@EsiraiMarch22_2808.jpg" alt="Serengeti plains at Esirai" loading="lazy"></div>
+            <div class="gallery-photo"><img src="photos/safari/esirai-camp/Serengeti@DoriCaspi00022-1.jpg" alt="Serengeti savanna" loading="lazy"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    </section>
+
+  <!-- ── Pricing ────────────────────────────────────── -->
+  <section id="pricing">
+    <div class="pricing-inner">
+      <div class="pricing-left">
+        <p class="pricing-eyebrow reveal">2027 Expeditions</p>
+        <h2 class="pricing-title reveal reveal-delay-1">
+          Two trips.<br>One <em>itinerary.</em>
+        </h2>
+        <p class="pricing-body reveal reveal-delay-2">
+          In 2027, Old Mountain will run two expeditions following this same 11-day itinerary. Spaces are offered on a first-come, first-served basis, so we recommend booking sooner rather than later. Groups are intentionally small — this is not a group tour. It is a shared expedition with a cohort of travelers who value depth over breadth. Final itinerary details are subject to change based on departure dates, group size, and on-the-ground logistics.
+        </p>
+        <ul class="pricing-includes reveal reveal-delay-3">
+          <li>All accommodation at hand-selected lodges and camps</li>
+          <li>All game drives, activities, and guides</li>
+          <li>Full-board meals throughout the journey</li>
+          <li>All park fees, conservation levies, and transfers</li>
+          <li>Hadzabe community experience and cultural activities</li>
+          <li>Internal charter flights where applicable</li>
+          <li>Personal guidance from Jesse and Trevor throughout</li>
+        </ul>
+      </div>
+      <div class="pricing-right reveal reveal-delay-1">
+        <div class="price-card featured">
+          <p class="price-label">Expedition A · 2027</p>
+          <p class="price-trip-name">First Departure</p>
+          <p class="price-dates">February 2027 - specific dates to be announced.</p>
+          <div class="price-amount">
+            <span class="price-currency">$</span>
+            <span class="price-number">10,600</span>
+          </div>
+          <p class="price-per">per person, all-inclusive</p>
+          <a href="#contact" class="price-cta">Inquire About This Trip</a>
+        </div>
+        <div class="price-card">
+          <p class="price-label">Expedition B · 2027</p>
+          <p class="price-trip-name">Second Departure</p>
+          <p class="price-dates">July 2027 - specific dates to be announced.</p>
+          <div class="price-amount">
+            <span class="price-currency">$</span>
+            <span class="price-number">10,600</span>
+          </div>
+          <p class="price-per">per person, all-inclusive</p>
+          <a href="#contact" class="price-cta-ghost">Inquire About This Trip</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ────────────────────────────────────── -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <p class="section-eyebrow reveal" style="color: var(--gold);">Get in touch</p>
+        <h2 class="contact-title reveal reveal-delay-1">
+          Your journey<br>starts <em>here.</em>
+        </h2>
+        <p class="contact-desc reveal reveal-delay-2">
+          Tell us which expedition you're interested in, and anything else we should know about you. Jesse or Trevor will be in touch personally to answer your questions and help you plan.
+        </p>
+        <div class="contact-detail reveal reveal-delay-3">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <span>hello@oldmountaintours.com</span>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <span>Tanzania &amp; East Africa</span>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form reveal reveal-delay-1" onsubmit="handleForm(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First name</label>
+            <input type="text" id="fname" name="fname" placeholder="Jesse" required>
+          </div>
+          <div class="form-group">
+            <label for="lname">Last name</label>
+            <input type="text" id="lname" name="lname" placeholder="Smith" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="expedition">Expedition of interest</label>
+          <select id="expedition" name="expedition">
+            <option value="">Select one</option>
+            <option value="a">Expedition A — First 2027 Departure</option>
+            <option value="b">Expedition B — Second 2027 Departure</option>
+            <option value="either">Either departure</option>
+            <option value="custom">I'd like to discuss a custom trip</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="party">Party size</label>
+          <input type="text" id="party" name="party" placeholder="e.g. 2 adults">
+        </div>
+        <div class="form-group">
+          <label for="message">Anything else we should know?</label>
+          <textarea id="message" name="message" placeholder="Tell us about yourself, your interests, or any questions you have."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Inquiry</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <a href="#" class="footer-logo">
+          <img src="logo/Logo.svg" alt="Old Mountain Tours and Explorations">
+        </a>
+        <ul class="footer-links">
+          <li><a href="#about">Our Story</a></li>
+          <li><a href="#itinerary">The Journey</a></li>
+          <li><a href="#pricing">2027 Expeditions</a></li>
+          <li><a href="#contact">Inquire</a></li>
+        </ul>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2025 Old Mountain Tours and Explorations. All rights reserved.</p>
+        <p class="footer-tagline">Born from the land.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Scripts ────────────────────────────────────── -->
+  <script>
+    // ── Hero Carousel ──────────────────────────────────
+    const slides = document.querySelectorAll('.hero-slide');
+    let current = 0;
+    let autoTimer;
+
+    function goTo(index) {
+      slides[current].classList.remove('active');
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      resetTimer();
+    }
+
+    function resetTimer() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => goTo(current + 1), 7000);
+    }
+
+    document.getElementById('heroNext').addEventListener('click', () => goTo(current + 1));
+    document.getElementById('heroPrev').addEventListener('click', () => goTo(current - 1));
+
+    resetTimer();
+
+    // ── Nav scroll behavior ────────────────────────────
+    const nav = document.getElementById('main-nav');
+    const hero = document.getElementById('hero');
+    const updateNavState = () => {
+      const pastHero = window.scrollY >= hero.offsetHeight;
+      nav.classList.toggle('visible', pastHero);
+      nav.classList.toggle('scrolled', pastHero);
+    };
+    updateNavState();
+    window.addEventListener('scroll', updateNavState, { passive: true });
+    window.addEventListener('resize', updateNavState);
+
+    // ── Scroll reveal ──────────────────────────────────
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── Lodge card gallery ─────────────────────────────
+    const lodgeGallery = document.getElementById('lodge-gallery');
+    const lodgeCards = document.querySelectorAll('.lodge-card');
+    const lodgeInners = document.querySelectorAll('.lodge-gallery-inner');
+
+    lodgeCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const lodge = card.dataset.lodge;
+        const wasActive = card.classList.contains('active');
+
+        lodgeCards.forEach(c => c.classList.remove('active'));
+
+        if (wasActive) {
+          lodgeGallery.classList.remove('open');
+        } else {
+          card.classList.add('active');
+          lodgeInners.forEach(inner => inner.classList.remove('active'));
+          document.querySelector(`.lodge-gallery-inner[data-for="${lodge}"]`).classList.add('active');
+          lodgeGallery.classList.add('open');
+          setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+        }
+      });
+    });
+
+    // ── Gallery drag-to-scroll ─────────────────────────
+    document.querySelectorAll('.gallery-track').forEach(track => {
+      let isDown = false, startX, scrollLeft;
+      track.addEventListener('mousedown', e => {
+        isDown = true;
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+      });
+      track.addEventListener('mouseleave', () => { isDown = false; });
+      track.addEventListener('mouseup', () => { isDown = false; });
+      track.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - track.offsetLeft;
+        track.scrollLeft = scrollLeft - (x - startX) * 1.4;
+      });
+    });
+
+    // ── Form handler ───────────────────────────────────
+    function handleForm(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.textContent = 'Inquiry sent — we\'ll be in touch.';
+      btn.disabled = true;
+      btn.style.background = 'rgba(240,230,211,0.5)';
+    }
+  </script>
+
+</body>
+</html>
