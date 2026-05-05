@@ -723,7 +723,7 @@
       text-transform: uppercase;
       color: rgba(240, 230, 211, 0.2);
     }
-    .gallery-track-wrap { position: relative; }
+    .gallery-track-wrap { position: relative; overflow: hidden; }
     .gallery-track-wrap::after {
       content: '';
       position: absolute;
@@ -770,6 +770,7 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 2px;
     }
+    .lodge-item { display: contents; }
     .lodge-card {
       background: var(--olive);
       padding: 36px 32px 28px;
@@ -779,15 +780,14 @@
       position: relative;
       transition: background 0.25s;
     }
-    .lodge-card:nth-child(even) { background: #3D5A2E; }
+    .lodge-item:nth-child(even) .lodge-card { background: #3D5A2E; }
     .lodge-card:hover { background: #364A28; }
-    .lodge-card:nth-child(even):hover { background: #476B35; }
-    .lodge-card.active { background: #1E2B18; }
-    .lodge-card:nth-child(even).active { background: #1E2B18; }
+    .lodge-item:nth-child(even) .lodge-card:hover { background: #476B35; }
+    .lodge-item.open .lodge-card { background: #1A2614; }
     .lodge-card::after {
       content: '';
       position: absolute;
-      bottom: 0; left: 0; right: 0;
+      top: 0; left: 0; right: 0;
       height: 2px;
       background: var(--gold);
       transform: scaleX(0);
@@ -795,7 +795,7 @@
       transition: transform 0.35s ease;
     }
     .lodge-card:hover::after,
-    .lodge-card.active::after { transform: scaleX(1); }
+    .lodge-item.open .lodge-card::after { transform: scaleX(1); }
     .lodge-night {
       font-family: 'Chainprinter', monospace;
       font-size: 0.65rem;
@@ -829,25 +829,28 @@
       transition: color 0.2s;
     }
     .lodge-card:hover .lodge-toggle,
-    .lodge-card.active .lodge-toggle { color: var(--gold); }
+    .lodge-item.open .lodge-card .lodge-toggle { color: var(--gold); }
     .lodge-toggle svg {
       transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .lodge-card.active .lodge-toggle svg { transform: rotate(180deg); }
+    .lodge-item.open .lodge-card .lodge-toggle svg { transform: rotate(180deg); }
 
-    /* Lodge photo gallery */
-    .lodge-gallery {
+    /* Lodge photo panel — desktop: single full-bleed strip beneath cards */
+    .lodge-panel {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .lodge-gallery.open { max-height: 580px; }
-    .lodge-gallery-inner { display: none; }
-    .lodge-gallery-inner.active {
-      display: block;
       background: var(--dark);
       border-top: 1px solid rgba(240, 230, 211, 0.07);
     }
+    .lodge-item.open .lodge-panel { max-height: 700px; }
+    .lodge-panel .gallery-meta { padding: 20px 24px 12px; }
+    .lodge-panel .gallery-track { padding: 0 24px 36px; }
+    .lodge-panel .gallery-photo { height: 320px; }
 
     /* ─── Pricing ────────────────────────────────────── */
     #pricing {
@@ -896,6 +899,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      margin-bottom: 30px;
     }
     .pricing-includes li {
       display: flex;
@@ -920,6 +924,40 @@
       background-repeat: no-repeat;
       background-position: center;
     }
+    .pricing-excludes-title {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(240, 230, 211, 0.62);
+      margin-bottom: 12px;
+    }
+    .pricing-excludes {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pricing-excludes li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 0.9rem;
+      color: rgba(240, 230, 211, 0.7);
+    }
+    .pricing-excludes li::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      background: rgba(240, 230, 211, 0.05);
+      border: 1px solid rgba(240, 230, 211, 0.38);
+      margin-top: 1px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='2' viewBox='0 0 10 2'%3E%3Cline x1='1' y1='1' x2='9' y2='1' stroke='%23F0E6D3' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
 
     .pricing-right {
       display: flex;
@@ -937,6 +975,10 @@
     .price-card.featured {
       background: var(--olive);
       border-color: var(--gold);
+    }
+    .price-card.featured.couple-rate {
+      background: rgba(240, 230, 211, 0.04);
+      border-color: rgba(240, 230, 211, 0.18);
     }
     .price-card.featured::before {
       content: 'Available Now';
@@ -966,6 +1008,22 @@
       color: var(--cream);
       letter-spacing: -0.01em;
       margin-bottom: 4px;
+    }
+    .price-trip-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .price-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--gold);
+      flex-shrink: 0;
+      opacity: 0.95;
+    }
+    .price-trip-head .price-trip-name {
+      margin-bottom: 0;
     }
     .price-dates {
       font-size: 0.85rem;
@@ -1233,10 +1291,15 @@
       .itinerary-days { padding: 0 32px; }
       .day-row { grid-template-columns: 60px 1fr; }
       .day-lodge { display: none; }
-      .lodge-gallery.open { max-height: 520px; }
-      .gallery-meta { padding: 24px 32px 14px; }
-      .gallery-track { padding: 0 32px 40px; }
-      .gallery-photo { height: 360px; }
+      .lodge-item { display: flex; flex-direction: column; min-width: 0; }
+      .lodge-panel {
+        grid-column: auto;
+        grid-row: auto;
+        width: auto;
+        margin-left: 0;
+      }
+      .lodge-item.open .lodge-panel { max-height: 520px; }
+      .lodge-panel .gallery-photo { height: 300px; }
       .lodges-grid { grid-template-columns: 1fr 1fr; padding: 0 32px; }
       .pricing-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
       .contact-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
@@ -1267,11 +1330,14 @@
       #manifesto, #itinerary, #pricing, #contact { padding: 80px 0; }
       .manifesto-inner, .itinerary-header, .pricing-inner, .contact-inner { padding: 0 24px; }
       .itinerary-days { padding: 0 24px; }
-      .lodge-gallery.open { max-height: 420px; }
-      .gallery-meta { padding: 20px 24px 12px; }
+      .lodge-item.open .lodge-panel { max-height: 460px; }
+      .lodge-panel .gallery-photo { height: 260px; }
+      .lodge-panel .gallery-track-wrap {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+      }
+      .lodge-panel .gallery-track { padding: 0 0 28px; }
       .gallery-hint { display: none; }
-      .gallery-track { padding: 0 24px 32px; }
-      .gallery-photo { height: 260px; }
       .lodges-grid { padding: 0 24px; margin-top: 40px; }
       .tanzania-header { padding: 0 24px 48px; }
       .footer-inner { padding: 0 24px; }
@@ -1540,109 +1606,115 @@
     </div>
 
     <div class="lodges-grid">
-      <div class="lodge-card reveal" data-lodge="tumbili">
-        <p class="lodge-night">Nights 1 &amp; 11</p>
-        <p class="lodge-name">Tumbili Lodge</p>
-        <p class="lodge-region">Arusha</p>
-        <span class="lodge-toggle">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          View photos
-        </span>
-      </div>
-      <div class="lodge-card reveal reveal-delay-1" data-lodge="pioneer">
-        <p class="lodge-night">Nights 2 – 5</p>
-        <p class="lodge-name">Dorobo Pioneer Camp</p>
-        <p class="lodge-region">Manyara Ranch &amp; Yaeda Valley</p>
-        <span class="lodge-toggle">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          View photos
-        </span>
-      </div>
-      <div class="lodge-card reveal reveal-delay-2" data-lodge="lionspaw">
-        <p class="lodge-night">Nights 6 – 7</p>
-        <p class="lodge-name">Lionspaw Lodge</p>
-        <p class="lodge-region">Ngorongoro</p>
-        <span class="lodge-toggle">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          View photos
-        </span>
-      </div>
-      <div class="lodge-card reveal reveal-delay-3" data-lodge="esirai">
-        <p class="lodge-night">Nights 8 – 10</p>
-        <p class="lodge-name">Esirai Migration Camp</p>
-        <p class="lodge-region">Ndutu &amp; Serengeti</p>
-        <span class="lodge-toggle">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          View photos
-        </span>
-      </div>
-    </div>
 
-    <div class="lodge-gallery" id="lodge-gallery">
-
-      <div class="lodge-gallery-inner" data-for="tumbili">
-        <div class="gallery-meta">
-          <span class="gallery-label">Tumbili Lodge · Arusha</span>
-          <span class="gallery-hint">Drag to explore</span>
+      <div class="lodge-item">
+        <div class="lodge-card reveal" data-lodge="tumbili">
+          <p class="lodge-night">Nights 1 &amp; 11</p>
+          <p class="lodge-name">Tumbili Lodge</p>
+          <p class="lodge-region">Arusha</p>
+          <span class="lodge-toggle">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            View photos
+          </span>
         </div>
-        <div class="gallery-track-wrap">
-          <div class="gallery-track">
-            <div class="gallery-photo"><img src="photos/safari/tumbili-lodge/96c260_009518a416f94fe29e24df8e1d2c2e0e~mv2.avif" alt="Tumbili Lodge, Arusha" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/tumbili-lodge/96c260_66f620863cd349cf94637a16965a0b63~mv2.avif" alt="Tumbili Lodge interior" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/tumbili-lodge/d6edb5_1a916e0dfee34857b6f84e98f7991c96~mv2.avif" alt="Tumbili Lodge grounds" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/tumbili-lodge/d6edb5_88daa4d6fba04ad18c405d7d58616dc6~mv2.avif" alt="Tumbili Lodge garden" loading="lazy"></div>
+        <div class="lodge-panel">
+          <div class="gallery-meta">
+            <span class="gallery-label">Tumbili Lodge · Arusha</span>
+            <span class="gallery-hint">Drag to explore</span>
+          </div>
+          <div class="gallery-track-wrap">
+            <div class="gallery-track">
+              <div class="gallery-photo"><img src="photos/safari/tumbili-lodge/96c260_009518a416f94fe29e24df8e1d2c2e0e~mv2.avif" alt="Tumbili Lodge, Arusha" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/tumbili-lodge/96c260_66f620863cd349cf94637a16965a0b63~mv2.avif" alt="Tumbili Lodge interior" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/tumbili-lodge/d6edb5_1a916e0dfee34857b6f84e98f7991c96~mv2.avif" alt="Tumbili Lodge grounds" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/tumbili-lodge/d6edb5_88daa4d6fba04ad18c405d7d58616dc6~mv2.avif" alt="Tumbili Lodge garden" loading="lazy"></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="lodge-gallery-inner" data-for="pioneer">
-        <div class="gallery-meta">
-          <span class="gallery-label">Dorobo Pioneer Camp · Manyara Ranch &amp; Yaeda Valley</span>
-          <span class="gallery-hint">Drag to explore</span>
+      <div class="lodge-item">
+        <div class="lodge-card reveal reveal-delay-1" data-lodge="pioneer">
+          <p class="lodge-night">Nights 2 – 5</p>
+          <p class="lodge-name">Dorobo Pioneer Camp</p>
+          <p class="lodge-region">Manyara Ranch &amp; Yaeda Valley</p>
+          <span class="lodge-toggle">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            View photos
+          </span>
         </div>
-        <div class="gallery-track-wrap">
-          <div class="gallery-track">
-            <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20250306-1-r8bt7k.jpg" alt="Manyara Ranch, Tanzania" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20250306-1-d2wo8j-1.jpg" alt="Dorobo Pioneer Camp" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20230314-7-m9u2tp.jpg" alt="Manyara Ranch landscape" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20260115-1-cocxy6.jpg" alt="Morning at Pioneer Camp" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20260115-1-ne19fb.jpg" alt="Manyara Ranch wilderness" loading="lazy"></div>
+        <div class="lodge-panel">
+          <div class="gallery-meta">
+            <span class="gallery-label">Dorobo Pioneer Camp · Manyara Ranch</span>
+            <span class="gallery-hint">Drag to explore</span>
+          </div>
+          <div class="gallery-track-wrap">
+            <div class="gallery-track">
+              <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20230314-7-m9u2tp.jpg" alt="Dorobo Pioneer Camp" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20230314-7-m9u2tp.jpg" alt="Manyara Ranch landscape" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20250306-1-d2wo8j-1.jpg" alt="Pioneer Camp in the bush" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20250306-1-r8bt7k.jpg" alt="Manyara Ranch, Tanzania" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20260115-1-cocxy6.jpg" alt="Morning at Pioneer Camp" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20260115-1-ne19fb.jpg" alt="Manyara Ranch wilderness" loading="lazy"></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="lodge-gallery-inner" data-for="lionspaw">
-        <div class="gallery-meta">
-          <span class="gallery-label">Lionspaw Lodge · Ngorongoro</span>
-          <span class="gallery-hint">Drag to explore</span>
+      <div class="lodge-item">
+        <div class="lodge-card reveal reveal-delay-2" data-lodge="lionspaw">
+          <p class="lodge-night">Nights 6 – 7</p>
+          <p class="lodge-name">Lionspaw Lodge</p>
+          <p class="lodge-region">Ngorongoro</p>
+          <span class="lodge-toggle">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            View photos
+          </span>
         </div>
-        <div class="gallery-track-wrap">
-          <div class="gallery-track">
-            <div class="gallery-photo"><img src="photos/safari/lions-paw/GGM08384-scaled.jpg" alt="Ngorongoro Crater panorama" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Scenery_2-scaled.jpg" alt="Ngorongoro highlands" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/lions-paw/LP-scaled.jpg" alt="Lionspaw Lodge exterior" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Restaurant_1-scaled.jpg" alt="Lionspaw Lodge restaurant" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Family_2-scaled.jpg" alt="Lionspaw Lodge family suite" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Twin_1-scaled.jpg" alt="Lionspaw Lodge twin room" loading="lazy"></div>
+        <div class="lodge-panel">
+          <div class="gallery-meta">
+            <span class="gallery-label">Lionspaw Lodge · Ngorongoro</span>
+            <span class="gallery-hint">Drag to explore</span>
+          </div>
+          <div class="gallery-track-wrap">
+            <div class="gallery-track">
+              <div class="gallery-photo"><img src="photos/safari/lions-paw/GGM08384-scaled.jpg" alt="Ngorongoro Crater panorama" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Scenery_2-scaled.jpg" alt="Ngorongoro highlands" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/lions-paw/LP-scaled.jpg" alt="Lionspaw Lodge exterior" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Restaurant_1-scaled.jpg" alt="Lionspaw Lodge restaurant" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Family_2-scaled.jpg" alt="Lionspaw Lodge family suite" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Twin_1-scaled.jpg" alt="Lionspaw Lodge twin room" loading="lazy"></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="lodge-gallery-inner" data-for="esirai">
-        <div class="gallery-meta">
-          <span class="gallery-label">Esirai Migration Camp · Ndutu &amp; Serengeti</span>
-          <span class="gallery-hint">Drag to explore</span>
+      <div class="lodge-item">
+        <div class="lodge-card reveal reveal-delay-3" data-lodge="esirai">
+          <p class="lodge-night">Nights 8 – 10</p>
+          <p class="lodge-name">Esirai Migration Camp</p>
+          <p class="lodge-region">Ndutu &amp; Serengeti</p>
+          <span class="lodge-toggle">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            View photos
+          </span>
         </div>
-        <div class="gallery-track-wrap">
-          <div class="gallery-track">
-            <div class="gallery-photo"><img src="photos/safari/esirai-camp/ElizaPowell@EsiraiMarch22_9593.jpg" alt="Wildlife near Esirai Camp" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/esirai-camp/ElizaPowell@Esirai_2710.jpg" alt="Esirai Camp exterior" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/esirai-camp/Esirai-north-.jpg" alt="Ndutu plains" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/esirai-camp/ElizaPowell@EsiraiMarch22_2732.jpg" alt="Esirai Migration Camp" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/esirai-camp/olmara-wildlife-@-James-Nassary-2391.jpg" alt="Wildlife, Ndutu" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/esirai-camp/EsiraiCamp@MartinHarvey00003.jpg" alt="Esirai Camp tents" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/esirai-camp/ElizaPowell@EsiraiMarch22_2808.jpg" alt="Serengeti plains at Esirai" loading="lazy"></div>
-            <div class="gallery-photo"><img src="photos/safari/esirai-camp/Serengeti@DoriCaspi00022-1.jpg" alt="Serengeti savanna" loading="lazy"></div>
+        <div class="lodge-panel">
+          <div class="gallery-meta">
+            <span class="gallery-label">Esirai Migration Camp · Ndutu &amp; Serengeti</span>
+            <span class="gallery-hint">Drag to explore</span>
+          </div>
+          <div class="gallery-track-wrap">
+            <div class="gallery-track">
+              <div class="gallery-photo"><img src="photos/safari/esirai-camp/Esirai-north-.jpg" alt="Ndutu plains" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/esirai-camp/ElizaPowell@EsiraiMarch22_2732.jpg" alt="Esirai Migration Camp" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/esirai-camp/olmara-wildlife-@-James-Nassary-2391.jpg" alt="Wildlife, Ndutu" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/esirai-camp/EsiraiCamp@MartinHarvey00003.jpg" alt="Esirai Camp tents" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/esirai-camp/ElizaPowell@EsiraiMarch22_2808.jpg" alt="Serengeti plains at Esirai" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/esirai-camp/Serengeti@DoriCaspi00022-1.jpg" alt="Serengeti savanna" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/esirai-camp/ElizaPowell@EsiraiMarch22_9593.jpg" alt="Wildlife near Esirai Camp" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/esirai-camp/ElizaPowell@Esirai_2710.jpg" alt="Esirai Camp exterior" loading="lazy"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1657,43 +1729,65 @@
       <div class="pricing-left">
         <p class="pricing-eyebrow reveal">2027 Expeditions</p>
         <h2 class="pricing-title reveal reveal-delay-1">
-          Two trips.<br>One <em>itinerary.</em>
+          Transparent<br><em>Pricing.</em>
         </h2>
         <p class="pricing-body reveal reveal-delay-2">
-          In 2027, Old Mountain will run two expeditions following this same 11-day itinerary. Spaces are offered on a first-come, first-served basis, so we recommend booking sooner rather than later. Groups are intentionally small — this is not a group tour. It is a shared expedition with a cohort of travelers who value depth over breadth. Final itinerary details are subject to change based on departure dates, group size, and on-the-ground logistics.
+          One itinerary, two straightforward ways to book. Reserve your spot at our standard flat rate, or book as a pair and receive our couple rate. Pricing is per person and all-inclusive for the full 11-day expedition.
         </p>
         <ul class="pricing-includes reveal reveal-delay-3">
-          <li>All accommodation at hand-selected lodges and camps</li>
-          <li>All game drives, activities, and guides</li>
-          <li>Full-board meals throughout the journey</li>
-          <li>All park fees, conservation levies, and transfers</li>
-          <li>Hadzabe community experience and cultural activities</li>
-          <li>Internal charter flights where applicable</li>
+          <li>Standard rate: $10,900 per person</li>
+          <li>Couple rate: $10,100 per person (when booking two travelers together)</li>
+          <li>Dorobo walking guides and safari vehicles</li>
+          <li>All applicable park fees, taxes, and listed activities</li>
+          <li>All meals, plus snacks and drinking water in the vehicles</li>
+          <li>Local beers, select wines, soft drinks, juices, teas, coffee, and drinking water at Dorobo Mobile Camp, Lionspaw Lodge, and Esirai Migration Camp</li>
+          <li>Accommodation at hand-selected lodges and camps</li>
           <li>Personal guidance from Jesse and Trevor throughout</li>
+        </ul>
+        <p class="pricing-excludes-title reveal reveal-delay-3">What's not included</p>
+        <ul class="pricing-excludes reveal reveal-delay-3">
+          <li>Tips and gratuities</li>
+          <li>Personal spending (for example: laundry, curios, and incidentals at lodges/camps)</li>
+          <li>Drinks at Tumbili Lodge (available for purchase)</li>
         </ul>
       </div>
       <div class="pricing-right reveal reveal-delay-1">
         <div class="price-card featured">
-          <p class="price-label">Expedition A · 2027</p>
-          <p class="price-trip-name">First Departure</p>
-          <p class="price-dates">February 2027 - specific dates to be announced.</p>
+          <p class="price-label">Flat Rate · 2027</p>
+          <div class="price-trip-head">
+            <svg class="price-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.7"></circle>
+              <path d="M5.5 18.5c.8-3.1 3.2-4.7 6.5-4.7s5.7 1.6 6.5 4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+            </svg>
+            <p class="price-trip-name">Standard Booking</p>
+          </div>
+          <p class="price-dates">For solo travelers or anyone booking independently.</p>
           <div class="price-amount">
             <span class="price-currency">$</span>
-            <span class="price-number">10,600</span>
+            <span class="price-number">10,900</span>
           </div>
           <p class="price-per">per person, all-inclusive</p>
-          <a href="#contact" class="price-cta">Inquire About This Trip</a>
+          <a href="#contact" class="price-cta">Book At Standard Rate</a>
         </div>
-        <div class="price-card">
-          <p class="price-label">Expedition B · 2027</p>
-          <p class="price-trip-name">Second Departure</p>
-          <p class="price-dates">July 2027 - specific dates to be announced.</p>
+        <div class="price-card featured couple-rate">
+          <p class="price-label">Couple Rate · 2027</p>
+          <div class="price-trip-head">
+            <svg class="price-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="8.2" cy="8.4" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"></circle>
+              <circle cx="15.8" cy="8.4" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"></circle>
+              <path d="M2.8 18.5c.6-2.8 2.6-4.2 5.4-4.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+              <path d="M21.2 18.5c-.6-2.8-2.6-4.2-5.4-4.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+              <path d="M7.2 18.5c.7-2.5 2.4-3.8 4.8-3.8s4.1 1.3 4.8 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+            </svg>
+            <p class="price-trip-name">Book As A Couple</p>
+          </div>
+          <p class="price-dates">For two travelers booking together on the same reservation.</p>
           <div class="price-amount">
             <span class="price-currency">$</span>
-            <span class="price-number">10,600</span>
+            <span class="price-number">10,100</span>
           </div>
-          <p class="price-per">per person, all-inclusive</p>
-          <a href="#contact" class="price-cta-ghost">Inquire About This Trip</a>
+          <p class="price-per">per person within the couple, all-inclusive</p>
+          <a href="#contact" class="price-cta-ghost">Book With Couple Discount</a>
         </div>
       </div>
     </div>
@@ -1833,32 +1927,27 @@
 
     revealEls.forEach(el => observer.observe(el));
 
-    // ── Lodge card gallery ─────────────────────────────
-    const lodgeGallery = document.getElementById('lodge-gallery');
-    const lodgeCards = document.querySelectorAll('.lodge-card');
-    const lodgeInners = document.querySelectorAll('.lodge-gallery-inner');
-
-    lodgeCards.forEach(card => {
+    // ── Lodge card gallery (per-card accordion) ────────
+    document.querySelectorAll('.lodge-card').forEach(card => {
       card.addEventListener('click', () => {
-        const lodge = card.dataset.lodge;
-        const wasActive = card.classList.contains('active');
+        const item = card.closest('.lodge-item');
+        const wasOpen = item.classList.contains('open');
 
-        lodgeCards.forEach(c => c.classList.remove('active'));
+        // Close all
+        document.querySelectorAll('.lodge-item.open').forEach(i => i.classList.remove('open'));
 
-        if (wasActive) {
-          lodgeGallery.classList.remove('open');
-        } else {
-          card.classList.add('active');
-          lodgeInners.forEach(inner => inner.classList.remove('active'));
-          const activeGallery = document.querySelector(`.lodge-gallery-inner[data-for="${lodge}"]`);
-          activeGallery.classList.add('active');
-          // Safari can skip lazy-loading images that start in display:none panels.
-          activeGallery.querySelectorAll('img[loading="lazy"]').forEach(img => {
+        if (!wasOpen) {
+          item.classList.add('open');
+          // Nudge lazy images inside the now-visible panel
+          item.querySelectorAll('.lodge-panel img[loading="lazy"]').forEach(img => {
             img.loading = 'eager';
-            if (!img.complete) img.src = img.currentSrc || img.src;
           });
-          lodgeGallery.classList.add('open');
-          setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+          // Keep mobile flow unchanged; desktop should stay anchored
+          if (window.matchMedia('(max-width: 1024px)').matches) {
+            setTimeout(() => {
+              item.querySelector('.lodge-panel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 80);
+          }
         }
       });
     });
