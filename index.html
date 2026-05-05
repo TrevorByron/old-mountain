@@ -460,6 +460,45 @@
       max-width: 520px;
     }
     .about-body p + p { margin-top: 20px; }
+    .about-scrapbook {
+      float: right;
+      width: clamp(200px, 28vw, 280px);
+      margin: 26px -6px 16px 24px;
+      padding: 10px 10px 14px;
+      background: #f4ead7;
+      border: 1px solid rgba(32, 25, 16, 0.15);
+      box-shadow: 0 8px 16px rgba(15, 13, 9, 0.14);
+      transform: rotate(2.5deg);
+      position: relative;
+      z-index: 2;
+    }
+    .about-scrapbook::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      width: 74px;
+      height: 20px;
+      transform: translateX(-50%) rotate(-4deg);
+      background: rgba(240, 230, 211, 0.6);
+      border: 1px solid rgba(26, 26, 20, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+    .about-scrapbook img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid rgba(26, 26, 20, 0.18);
+      filter: contrast(0.96) saturate(0.88);
+    }
+    .about-scrapbook figcaption {
+      margin-top: 10px;
+      font-family: 'Sunday April', serif;
+      font-size: 1.02rem;
+      color: rgba(26, 26, 20, 0.72);
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+    }
     .about-names {
       display: flex;
       gap: 40px;
@@ -467,7 +506,6 @@
       padding-top: 40px;
       border-top: 1px solid rgba(26, 26, 20, 0.15);
     }
-    .about-name-card {}
     .about-name-title {
       font-size: 0.7rem;
       letter-spacing: 0.18em;
@@ -626,6 +664,13 @@
       color: rgba(26, 26, 20, 0.6);
       align-self: end;
     }
+    .itinerary-subnote {
+      margin-top: 14px;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(26, 26, 20, 0.52);
+    }
     .itinerary-desc strong { color: var(--text-dark); font-weight: 700; }
 
     /* Day-by-day */
@@ -636,7 +681,7 @@
     }
     .day-row {
       display: grid;
-      grid-template-columns: 80px 1fr auto;
+      grid-template-columns: 80px 1fr;
       gap: 0;
       border-top: 1px solid rgba(26, 26, 20, 0.12);
       padding: 28px 0;
@@ -651,7 +696,6 @@
       color: var(--gold);
       padding-top: 4px;
     }
-    .day-content {}
     .day-title {
       font-size: 1.1rem;
       font-weight: 700;
@@ -663,15 +707,6 @@
       font-size: 0.9rem;
       color: rgba(26, 26, 20, 0.55);
       line-height: 1.5;
-    }
-    .day-lodge {
-      font-size: 0.8rem;
-      letter-spacing: 0.06em;
-      color: var(--olive);
-      font-weight: 600;
-      padding-top: 4px;
-      text-align: right;
-      min-width: 200px;
     }
 
     /* Lodge gallery */
@@ -736,9 +771,19 @@
     .gallery-photo:hover img { transform: scale(1.03); }
 
     /* Lodges highlight */
+    .lodges-label {
+      max-width: 1280px;
+      margin: 64px auto 18px;
+      padding: 0 64px;
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(26, 26, 20, 0.5);
+    }
     .lodges-grid {
       max-width: 1280px;
-      margin: 64px auto 0;
+      margin: 0 auto 0;
       padding: 0 64px;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -840,7 +885,6 @@
       gap: 100px;
       align-items: center;
     }
-    .pricing-left {}
     .pricing-eyebrow {
       font-family: 'Chainprinter', monospace;
       font-size: 0.7rem;
@@ -1080,7 +1124,6 @@
       gap: 100px;
       align-items: center;
     }
-    .contact-left {}
     .contact-title {
       font-size: clamp(2.4rem, 4vw, 4rem);
       font-weight: 800;
@@ -1179,6 +1222,217 @@
     }
     .form-submit:hover { background: #fff; transform: translateY(-1px); }
 
+    /* ─── Intake Modal ───────────────────────────────── */
+    .intake-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .intake-modal.open { display: flex; }
+    .intake-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 12, 8, 0.78);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+    }
+    .intake-modal-panel {
+      position: relative;
+      z-index: 1;
+      width: min(860px, 100%);
+      max-height: min(92vh, 900px);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--olive);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(240, 230, 211, 0.18);
+      display: flex;
+      flex-direction: column;
+    }
+    .intake-modal-head {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid rgba(240, 230, 211, 0.16);
+      color: var(--cream);
+      background: rgba(14, 18, 9, 0.44);
+    }
+    .intake-modal-head-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      font-family: 'Chainprinter', monospace;
+    }
+    .intake-modal-title {
+      font-size: 0.86rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .intake-modal-photo-grid {
+      width: 100%;
+      height: 112px;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(240, 230, 211, 0.12);
+      background: rgba(240, 230, 211, 0.06);
+    }
+    .intake-modal-photo-grid::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: url('photos/grain/fine_grain_light.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.55;
+      z-index: 1;
+    }
+    .intake-modal-photo-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.92) contrast(0.95);
+    }
+    .intake-modal-close {
+      border: 1px solid rgba(240, 230, 211, 0.22);
+      background: rgba(240, 230, 211, 0.08);
+      color: var(--cream);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .intake-modal-close:hover { background: rgba(240, 230, 211, 0.16); }
+    .intake-modal-body {
+      height: min(78vh, 820px);
+      overflow: hidden;
+      background: var(--olive);
+      padding: 0;
+    }
+    .intake-modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+    .intake-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .intake-intro {
+      color: rgba(240, 230, 211, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      margin-bottom: 6px;
+    }
+    .intake-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .intake-field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .intake-field.full { grid-column: 1 / -1; }
+    .intake-field label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(240, 230, 211, 0.5);
+    }
+    .intake-field input,
+    .intake-field select,
+    .intake-field textarea {
+      border: 1px solid rgba(240, 230, 211, 0.15);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      color: var(--cream);
+      background: rgba(240, 230, 211, 0.06);
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .intake-field input::placeholder,
+    .intake-field textarea::placeholder {
+      color: rgba(240, 230, 211, 0.3);
+    }
+    .intake-field select option {
+      background: var(--olive);
+      color: var(--cream);
+    }
+    .intake-field select[multiple] {
+      min-height: 132px;
+      padding: 8px 12px;
+      appearance: auto;
+      -webkit-appearance: listbox;
+    }
+    .intake-field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .intake-field input:focus,
+    .intake-field select:focus,
+    .intake-field textarea:focus {
+      border-color: var(--gold);
+    }
+    .intake-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .intake-submit {
+      background: var(--cream);
+      color: var(--dark);
+      border: none;
+      border-radius: 100px;
+      padding: 14px 26px;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .intake-submit:hover {
+      background: #fff;
+      transform: translateY(-1px);
+    }
+    .intake-submit[disabled] {
+      cursor: wait;
+      opacity: 0.7;
+      transform: none;
+    }
+    .intake-status {
+      font-size: 0.88rem;
+      line-height: 1.3;
+    }
+    .intake-status.success { color: #c9f0d6; }
+    .intake-status.error { color: #ffd8d8; }
+    .is-hidden { display: none; }
+    .modal-open { overflow: hidden; }
+
     /* ─── Footer ─────────────────────────────────────── */
     footer {
       background: var(--dark);
@@ -1256,6 +1510,7 @@
       .about-grid { grid-template-columns: 1fr; }
       .about-photo-side { height: 50vh; }
       .about-text-side { padding: 64px 40px; }
+      .about-scrapbook { margin-right: 0; }
       .stats-inner { grid-template-columns: repeat(3, 1fr); padding: 0 32px; }
       .tanzania-header { grid-template-columns: 1fr; gap: 32px; padding: 0 32px 60px; }
       .photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
@@ -1263,7 +1518,6 @@
       .itinerary-header { grid-template-columns: 1fr; gap: 32px; padding: 0 32px 60px; }
       .itinerary-days { padding: 0 32px; }
       .day-row { grid-template-columns: 60px 1fr; }
-      .day-lodge { display: none; }
       .lodge-item { display: flex; flex-direction: column; min-width: 0; }
       .lodge-panel {
         grid-column: auto;
@@ -1273,6 +1527,7 @@
       }
       .lodge-item.open .lodge-panel { max-height: 520px; }
       .lodge-panel .gallery-photo { height: 300px; }
+      .lodges-label { padding: 0 32px; }
       .lodges-grid { grid-template-columns: 1fr; padding: 0 32px; }
       .pricing-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
       .contact-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
@@ -1295,6 +1550,12 @@
       .hero-emblem { width: clamp(130px, 34vw, 170px); height: clamp(130px, 34vw, 170px); }
       .hero-tagline { font-size: 0.92rem; letter-spacing: 0.1em; line-height: 1.45; }
       .stats-inner { grid-template-columns: 1fr; gap: 32px; }
+      .about-scrapbook {
+        float: none;
+        width: min(270px, 76%);
+        margin: 8px auto 18px;
+        transform: rotate(1.5deg);
+      }
       .stat-item + .stat-item { border-left: none; border-top: 1px solid rgba(240, 230, 211, 0.15); padding-top: 32px; }
       .photo-grid { grid-template-columns: 1fr; grid-template-rows: 300px 240px 240px; }
       .photo-tile:nth-child(n+4) { display: none; }
@@ -1310,10 +1571,20 @@
       }
       .lodge-panel .gallery-track { padding: 0 0 28px; }
       .gallery-hint { display: none; }
-      .lodges-grid { padding: 0 0px; margin-top: 40px; }
+      .lodges-label { padding: 0 24px; margin: 40px auto 14px; }
+      .lodges-grid { padding: 0 0px; margin-top: 0; }
       .tanzania-header { padding: 0 24px 48px; }
       .footer-inner { padding: 0 24px; }
       .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
+      .intake-modal { padding: 12px; }
+      .intake-modal-head { padding: 12px; }
+      .intake-modal-photo-grid {
+        height: 92px;
+      }
+      .intake-modal-body { padding: 0; }
+      .intake-grid { grid-template-columns: 1fr; }
+      .intake-actions { flex-direction: column; align-items: stretch; }
+      .intake-submit { width: 100%; }
     }
   </style>
 </head>
@@ -1328,9 +1599,9 @@
       <li><a href="#about">Our Story</a></li>
       <li><a href="#itinerary">The Journey</a></li>
       <li><a href="#pricing">2027 Expeditions</a></li>
-      <li><a href="#contact">Inquire</a></li>
+      <li><a href="#" class="open-intake-modal">Inquire</a></li>
     </ul>
-    <a href="#contact" class="nav-cta">Save your spot</a>
+    <a href="#" class="nav-cta open-intake-modal">Save your spot</a>
   </nav>
 
   <!-- ── Hero ─────────────────────────────────────── -->
@@ -1369,7 +1640,7 @@
         <p class="hero-tagline">An 11-day safari in Tanzania.<br>Led by Trevor and Jesse Borden.</p>
 
         <div class="hero-actions">
-          <a href="#itinerary" class="btn-primary">Save your spot</a>
+          <a href="#" class="btn-primary open-intake-modal">Save your spot</a>
         </div>
       </div>
     </div>
@@ -1408,6 +1679,10 @@
           <p>Jesse and Trevor Borden grew up in East Africa, went to school in the West, and have spent their lives moving comfortably between both. They understand what it means to dream about Africa from a distance — and they understand Africa itself in a way that only comes from growing up inside it. That combination is rare. It's the whole reason Old Mountain exists.</p>
           <p>Jesse is a conservation ecologist with a PhD and over a decade of leading expeditions across Tanzania, Central America, and beyond. Trevor has been organizing and guiding people in East Africa since he was 19 years old. Together, they bring the kind of knowledge you can't find in a brochure — and the kind of care that makes you feel like you're traveling with family, not a vendor.</p>
           <p>When you travel with Old Mountain, you're not handing your trip to a company. You're handing it to two people who have wanted to share this place their entire lives — and who will make sure you come home knowing you did it right.</p>
+          <figure class="about-scrapbook">
+            <img src="photos/about/childhood-trevor.png" alt="Jesse and Trevor as children in East Africa" loading="lazy">
+            <figcaption>Jesse and Trevor in 1994.</figcaption>
+          </figure>
         </div>
         <div class="about-names reveal reveal-delay-3">
           <div class="about-name-card">
@@ -1474,7 +1749,8 @@
         The<br><em>Journey.</em><br>Eleven days.
       </h2>
       <div class="itinerary-desc reveal reveal-delay-2">
-        <p>This 11-day journey is operated in direct partnership with our longtime friends at Dorobo Safaris — arguably the finest safari operators in the region. We're working with Dorobo because their ethos resonates deeply with Old Mountain: unmatched field experience, deep local knowledge, and a steadfast commitment to caring for both the environment and the people who call it home.</p>
+        <p>This journey reflects what we love most about Africa: being out in it up close, on the ground, under the stars, and falling asleep to the sounds beyond the tent. It also celebrates Africa's beauty from extraordinary, deeply comfortable places. We partner with Dorobo Safaris because they are rooted in this landscape and lead with a rare balance of expertise, respect for local communities, and genuinely soulful guiding. Together, we've curated the full spectrum - from tented walking experiences and community connection in the Manyara ecosystem to epic lodges, vast vistas, and unforgettable sundowners - so guests feel the true breadth of Africa.</p>
+        <p class="itinerary-subnote">Specific itinerary details are subject to change based on availability, travel dates, and group size.</p>
       </div>
     </div>
 
@@ -1485,23 +1761,20 @@
           <p class="day-title">Arrival into Arusha</p>
           <p class="day-desc">International arrival, transfer and settle in. Your African adventure begins tonight.</p>
         </div>
-        <span class="day-lodge">Tumbili Lodge</span>
       </div>
       <div class="day-row reveal">
         <span class="day-num">Day 02</span>
         <div class="day-content">
-          <p class="day-title">Half-day Arusha, afternoon to Manyara Ranch</p>
-          <p class="day-desc">Morning in town, then head north into the rift highlands to Manyara Ranch.</p>
+          <p class="day-title">Half-day Arusha, afternoon to the Manyara Ecosystem</p>
+          <p class="day-desc">Morning in town, then head north into the rift highlands to the Manyara Ecosystem for a more old-Africa rhythm in the field.</p>
         </div>
-        <span class="day-lodge">Dorobo Pioneer Camp</span>
       </div>
       <div class="day-row reveal">
         <span class="day-num">Day 03</span>
         <div class="day-content">
-          <p class="day-title">Full day — Manyara Ranch activities</p>
-          <p class="day-desc">Walking, game drives, and time to absorb the rhythms of a working East African ranch.</p>
+          <p class="day-title">Full day - Manyara Ecosystem experiences</p>
+          <p class="day-desc">Walking, wildlife tracking, and time with local communities in a less curated, on-the-ground experience away from the air-conditioned windows.</p>
         </div>
-        <span class="day-lodge">Dorobo Pioneer Camp</span>
       </div>
       <div class="day-row reveal">
         <span class="day-num">Day 04</span>
@@ -1509,7 +1782,6 @@
           <p class="day-title">Drive to the Yaeda Valley — Hadzabe activities</p>
           <p class="day-desc">Cross into the remote Yaeda Valley and spend the afternoon with the Hadzabe, one of the last hunter-gatherer peoples on earth.</p>
         </div>
-        <span class="day-lodge">Dorobo Pioneer Camp</span>
       </div>
       <div class="day-row reveal">
         <span class="day-num">Day 05</span>
@@ -1517,7 +1789,6 @@
           <p class="day-title">Full day with the Hadzabe</p>
           <p class="day-desc">A rare and extraordinary day living alongside and learning from the Hadzabe community.</p>
         </div>
-        <span class="day-lodge">Dorobo Pioneer Camp</span>
       </div>
       <div class="day-row reveal">
         <span class="day-num">Day 06</span>
@@ -1525,7 +1796,6 @@
           <p class="day-title">Morning with the Hadzabe — drive to Ngorongoro</p>
           <p class="day-desc">A final morning in the Yaeda Valley before transferring to the Ngorongoro highlands.</p>
         </div>
-        <span class="day-lodge">Lionspaw Lodge</span>
       </div>
       <div class="day-row reveal">
         <span class="day-num">Day 07</span>
@@ -1533,7 +1803,6 @@
           <p class="day-title">Full day — Ngorongoro Crater, game drives</p>
           <p class="day-desc">Descend into the world's largest intact volcanic caldera, a natural amphitheater teeming with wildlife including the Big Five.</p>
         </div>
-        <span class="day-lodge">Lionspaw Lodge</span>
       </div>
       <div class="day-row reveal">
         <span class="day-num">Day 08</span>
@@ -1541,7 +1810,6 @@
           <p class="day-title">Full day — Ndutu area and plains, game drives</p>
           <p class="day-desc">Enter the Ndutu wetlands, a calving ground for wildebeest and one of the most ecologically rich corners of the Serengeti ecosystem.</p>
         </div>
-        <span class="day-lodge">Esirai Migration Camp</span>
       </div>
       <div class="day-row reveal">
         <span class="day-num">Day 09</span>
@@ -1549,7 +1817,6 @@
           <p class="day-title">Central and Eastern Serengeti — game drives</p>
           <p class="day-desc">Venture into the heart of the Serengeti. Vast skies, infinite plains, and the great migration on the move.</p>
         </div>
-        <span class="day-lodge">Esirai Migration Camp</span>
       </div>
       <div class="day-row reveal">
         <span class="day-num">Day 10</span>
@@ -1557,7 +1824,6 @@
           <p class="day-title">Ndutu or Serengeti — game drives</p>
           <p class="day-desc">A final full day in the wilderness. Follow the wildlife, follow your instincts, follow the light.</p>
         </div>
-        <span class="day-lodge">Esirai Migration Camp</span>
       </div>
       <div class="day-row reveal">
         <span class="day-num">Day 11</span>
@@ -1565,10 +1831,10 @@
           <p class="day-title">Fly to Arusha — international departure</p>
           <p class="day-desc">Morning flight back to Arusha. Farewell lunch at Tumbili Lodge before your international connection home.</p>
         </div>
-        <span class="day-lodge">Tumbili Lodge (day room)</span>
       </div>
     </div>
 
+    <p class="lodges-label reveal">Where you'll be sleeping</p>
     <div class="lodges-grid">
 
       <div class="lodge-item">
@@ -1601,7 +1867,7 @@
         <div class="lodge-card reveal reveal-delay-1" data-lodge="pioneer">
           <p class="lodge-night">Nights 2 – 5</p>
           <p class="lodge-name">Dorobo Pioneer Camp</p>
-          <p class="lodge-region">Manyara Ranch &amp; Yaeda Valley</p>
+          <p class="lodge-region">Manyara Ecosystem &amp; Yaeda Valley</p>
           <span class="lodge-toggle">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             View photos
@@ -1609,17 +1875,16 @@
         </div>
         <div class="lodge-panel">
           <div class="gallery-meta">
-            <span class="gallery-label">Dorobo Pioneer Camp · Manyara Ranch</span>
+            <span class="gallery-label">Dorobo Pioneer Camp · Manyara Ecosystem</span>
             <span class="gallery-hint">Drag to explore</span>
           </div>
           <div class="gallery-track-wrap">
             <div class="gallery-track">
               <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20230314-7-m9u2tp.jpg" alt="Dorobo Pioneer Camp" loading="lazy"></div>
-              <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20230314-7-m9u2tp.jpg" alt="Manyara Ranch landscape" loading="lazy"></div>
               <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20250306-1-d2wo8j-1.jpg" alt="Pioneer Camp in the bush" loading="lazy"></div>
-              <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20250306-1-r8bt7k.jpg" alt="Manyara Ranch, Tanzania" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20250306-1-r8bt7k.jpg" alt="Manyara Ecosystem, Tanzania" loading="lazy"></div>
               <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20260115-1-cocxy6.jpg" alt="Morning at Pioneer Camp" loading="lazy"></div>
-              <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20260115-1-ne19fb.jpg" alt="Manyara Ranch wilderness" loading="lazy"></div>
+              <div class="gallery-photo"><img src="photos/safari/pioneer-camp/image_processing20260115-1-ne19fb.jpg" alt="Manyara Ecosystem wilderness" loading="lazy"></div>
             </div>
           </div>
         </div>
@@ -1731,7 +1996,7 @@
             <span class="price-number">10,900</span>
           </div>
           <p class="price-per">per person, all-inclusive</p>
-          <a href="#contact" class="price-cta">Save your spot</a>
+          <a href="#" class="price-cta open-intake-modal">Save your spot</a>
         </div>
         <div class="price-card featured couple-rate">
           <p class="price-label">Couple Rate · 2027</p>
@@ -1751,73 +2016,9 @@
             <span class="price-number">10,100</span>
           </div>
           <p class="price-per">per person within the couple, all-inclusive</p>
-          <a href="#contact" class="price-cta-ghost">Save your spot</a>
+          <a href="#" class="price-cta-ghost open-intake-modal">Save your spot</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ── Contact ────────────────────────────────────── -->
-  <section id="contact">
-    <div class="contact-inner">
-      <div class="contact-left">
-        <p class="section-eyebrow reveal" style="color: var(--gold);">Get in touch</p>
-        <h2 class="contact-title reveal reveal-delay-1">
-          Your journey<br>starts <em>here.</em>
-        </h2>
-        <p class="contact-desc reveal reveal-delay-2">
-          Tell us which expedition you're interested in, and anything else we should know about you. Jesse or Trevor will be in touch personally to answer your questions and help you plan.
-        </p>
-        <div class="contact-detail reveal reveal-delay-3">
-          <div class="contact-item">
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </div>
-            <span>hello@oldmountaintours.com</span>
-          </div>
-          <div class="contact-item">
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            </div>
-            <span>Tanzania &amp; East Africa</span>
-          </div>
-        </div>
-      </div>
-      <form class="contact-form reveal reveal-delay-1" onsubmit="handleForm(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="fname">First name</label>
-            <input type="text" id="fname" name="fname" placeholder="Jesse" required>
-          </div>
-          <div class="form-group">
-            <label for="lname">Last name</label>
-            <input type="text" id="lname" name="lname" placeholder="Smith" required>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input type="email" id="email" name="email" placeholder="you@example.com" required>
-        </div>
-        <div class="form-group">
-          <label for="expedition">Expedition of interest</label>
-          <select id="expedition" name="expedition">
-            <option value="">Select one</option>
-            <option value="a">Expedition A — First 2027 Departure</option>
-            <option value="b">Expedition B — Second 2027 Departure</option>
-            <option value="either">Either departure</option>
-            <option value="custom">I'd like to discuss a custom trip</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="party">Party size</label>
-          <input type="text" id="party" name="party" placeholder="e.g. 2 adults">
-        </div>
-        <div class="form-group">
-          <label for="message">Anything else we should know?</label>
-          <textarea id="message" name="message" placeholder="Tell us about yourself, your interests, or any questions you have."></textarea>
-        </div>
-        <button type="submit" class="form-submit">Send Inquiry</button>
-      </form>
     </div>
   </section>
 
@@ -1832,7 +2033,7 @@
           <li><a href="#about">Our Story</a></li>
           <li><a href="#itinerary">The Journey</a></li>
           <li><a href="#pricing">2027 Expeditions</a></li>
-          <li><a href="#contact">Inquire</a></li>
+          <li><a href="#" class="open-intake-modal">Inquire</a></li>
         </ul>
       </div>
       <div class="footer-bottom">
@@ -1841,6 +2042,35 @@
       </div>
     </div>
   </footer>
+
+  <!-- ── Intake Modal ────────────────────────────────── -->
+  <div class="intake-modal" id="intakeModal" aria-hidden="true">
+    <div class="intake-modal-backdrop" data-close-intake-modal></div>
+    <div class="intake-modal-panel" role="dialog" aria-modal="true" aria-labelledby="intakeModalTitle">
+      <div class="intake-modal-head">
+        <div class="intake-modal-head-top">
+          <p class="intake-modal-title" id="intakeModalTitle">Save your spot</p>
+          <button type="button" class="intake-modal-close" data-close-intake-modal aria-label="Close intake form">&times;</button>
+        </div>
+        <div class="intake-modal-photo-grid" aria-hidden="true">
+          <img src="photos/safari/lions-paw/Ngorongoro-Lions-Paw_Scenery_2-scaled.jpg" alt="">
+        </div>
+      </div>
+      <div class="intake-modal-body">
+        <iframe
+          class="airtable-embed"
+          id="airtableIntakeFrame"
+          src=""
+          frameborder="0"
+          onmousewheel=""
+          width="100%"
+          height="80vh"
+          loading="eager"
+          style="background: transparent; border: 1px solid #ccc;">
+        </iframe>
+      </div>
+    </div>
+  </div>
 
   <!-- ── Scripts ────────────────────────────────────── -->
   <script>
@@ -1931,14 +2161,46 @@
       });
     });
 
-    // ── Form handler ───────────────────────────────────
-    function handleForm(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('.form-submit');
-      btn.textContent = 'Inquiry sent — we\'ll be in touch.';
-      btn.disabled = true;
-      btn.style.background = 'rgba(240,230,211,0.5)';
-    }
+    // ── Airtable intake modal ──────────────────────────
+    const AIRTABLE_FORM_URL = 'https://airtable.com/embed/appHOiCPSEwIBMWFE/pag47ooCaqpTGfS2Y/form';
+    const intakeModal = document.getElementById('intakeModal');
+    const intakeIframe = document.getElementById('airtableIntakeFrame');
+    const modalOpeners = document.querySelectorAll('.open-intake-modal');
+    const modalClosers = document.querySelectorAll('[data-close-intake-modal]');
+
+    const openIntakeModal = () => {
+      if (!AIRTABLE_FORM_URL.includes('airtable.com/')) {
+        window.alert('Add your Airtable form URL in AIRTABLE_FORM_URL first.');
+        return;
+      }
+      intakeIframe.src = AIRTABLE_FORM_URL;
+      intakeModal.classList.add('open');
+      intakeModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+    };
+
+    const closeIntakeModal = () => {
+      intakeModal.classList.remove('open');
+      intakeModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    };
+
+    modalOpeners.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openIntakeModal();
+      });
+    });
+
+    modalClosers.forEach(el => {
+      el.addEventListener('click', closeIntakeModal);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && intakeModal.classList.contains('open')) {
+        closeIntakeModal();
+      }
+    });
   </script>
 
 </body>
