@@ -443,12 +443,17 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(12, 15, 10, 0.86) 0%,
-        rgba(12, 15, 10, 0.45) 38%,
-        rgba(12, 15, 10, 0.2) 100%
-      );
+      background-image:
+        linear-gradient(
+          to top,
+          rgba(12, 15, 10, 0.86) 0%,
+          rgba(12, 15, 10, 0.45) 38%,
+          rgba(12, 15, 10, 0.2) 100%
+        ),
+        url('photos/grain/fine_grain_light.png');
+      background-size: cover, cover;
+      background-position: center, center;
+      background-repeat: no-repeat, no-repeat;
       pointer-events: none;
     }
     .manifesto-value-text {
