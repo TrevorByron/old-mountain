@@ -130,6 +130,31 @@
       color: var(--dark);
       border-color: var(--cream);
     }
+    .nav-menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(240, 230, 211, 0.35);
+      background: rgba(14, 18, 9, 0.48);
+      color: var(--cream);
+      cursor: pointer;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    .nav-menu-toggle:hover {
+      background: rgba(240, 230, 211, 0.12);
+      border-color: rgba(240, 230, 211, 0.6);
+    }
+    .nav-menu-toggle svg {
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
+    }
+    .mobile-nav-menu {
+      display: none;
+    }
 
     /* ─── Hero ───────────────────────────────────────── */
     #hero {
@@ -1538,8 +1563,69 @@
       .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
     }
     @media (max-width: 640px) {
-      nav { padding: 20px 24px; }
-      .nav-links { display: none; }
+      nav { padding: 12px 16px; }
+      nav.scrolled { padding: 10px 16px; }
+      .nav-logo img { height: 32px; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-menu-toggle { display: inline-flex; }
+      .mobile-nav-menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 16px;
+        right: 16px;
+        display: block;
+        padding: 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(240, 230, 211, 0.14);
+        background: rgba(14, 18, 9, 0.96);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-8px);
+        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+      }
+      nav.mobile-menu-open .mobile-nav-menu {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+      .mobile-nav-links {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .mobile-nav-links a {
+        display: block;
+        padding: 10px 10px;
+        border-radius: 8px;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--cream);
+        opacity: 0.9;
+      }
+      .mobile-nav-links a:hover {
+        background: rgba(240, 230, 211, 0.08);
+        opacity: 1;
+      }
+      .mobile-nav-cta {
+        margin-top: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 10px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(240, 230, 211, 0.45);
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
       .hero-content { padding: 0 24px 80px; }
       .hero-wordmark { letter-spacing: 0.04em; }
       .hero-script { font-size: clamp(1.5rem, 8vw, 2.25rem); margin-bottom: 18px; }
@@ -1599,10 +1685,22 @@
     <ul class="nav-links">
       <li><a href="#about">Our Story</a></li>
       <li><a href="#itinerary">The Journey</a></li>
-      <li><a href="#pricing">2027 Expeditions</a></li>
-      <li><a href="#" class="open-intake-modal">Inquire</a></li>
+      <li><a href="#pricing">Pricing</a></li>
     </ul>
     <a href="#" class="nav-cta open-intake-modal">Save your spot</a>
+    <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-menu" aria-label="Open site menu">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+      </svg>
+    </button>
+    <div class="mobile-nav-menu" id="mobile-nav-menu">
+      <ul class="mobile-nav-links">
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="#itinerary">The Journey</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+      <a href="#" class="mobile-nav-cta open-intake-modal">Save your spot</a>
+    </div>
   </nav>
 
   <!-- ── Hero ─────────────────────────────────────── -->
@@ -2033,8 +2131,7 @@
         <ul class="footer-links">
           <li><a href="#about">Our Story</a></li>
           <li><a href="#itinerary">The Journey</a></li>
-          <li><a href="#pricing">2027 Expeditions</a></li>
-          <li><a href="#" class="open-intake-modal">Inquire</a></li>
+          <li><a href="#pricing">Pricing</a></li>
         </ul>
       </div>
       <div class="footer-bottom">
@@ -2097,6 +2194,29 @@
     // ── Nav scroll behavior ────────────────────────────
     const nav = document.getElementById('main-nav');
     const hero = document.getElementById('hero');
+    const navMenuToggle = document.querySelector('.nav-menu-toggle');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a, .mobile-nav-cta');
+    const closeMobileNavMenu = () => {
+      nav.classList.remove('mobile-menu-open');
+      if (navMenuToggle) navMenuToggle.setAttribute('aria-expanded', 'false');
+    };
+    if (navMenuToggle) {
+      navMenuToggle.addEventListener('click', () => {
+        const shouldOpen = !nav.classList.contains('mobile-menu-open');
+        nav.classList.toggle('mobile-menu-open', shouldOpen);
+        navMenuToggle.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+      });
+    }
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileNavMenu();
+      });
+    });
+    window.addEventListener('resize', () => {
+      if (!window.matchMedia('(max-width: 640px)').matches) {
+        closeMobileNavMenu();
+      }
+    });
     const updateNavState = () => {
       const pastHero = window.scrollY >= hero.offsetHeight;
       nav.classList.toggle('visible', pastHero);
