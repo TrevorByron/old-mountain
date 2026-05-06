@@ -223,7 +223,7 @@
       justify-content: center;
       text-align: center;
       z-index: 3;
-      padding: 80px 40px 100px;
+      padding: 80px clamp(40px, 7vw, 120px) 100px;
     }
     .hero-brand {
       display: flex;
@@ -321,19 +321,12 @@
       text-transform: uppercase;
       color: rgba(240, 230, 211, 0.84);
       line-height: 1.35;
-      max-width: 660px;
+      max-width: 600px;
+      width: 100%;
       margin-top: 36px;
       margin-bottom: 44px;
+      padding: 0 clamp(16px, 4vw, 40px);
       text-shadow: 0 2px 18px rgba(0,0,0,0.35);
-    }
-    .hero-tagline-line2 {
-      display: block;
-      margin-top: 12px;
-      font-size: 0.88em;
-      letter-spacing: 0.1em;
-      line-height: 1.45;
-      color: rgba(240, 230, 211, 0.78);
-      font-weight: 500;
     }
     .hero-cta-group {
       display: flex;
@@ -652,34 +645,6 @@
       color: var(--text-dark);
       letter-spacing: -0.01em;
     }
-    .about-story-cta-wrap {
-      margin-top: 32px;
-    }
-    .about-story-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Chainprinter', monospace;
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-dark);
-      border: 1px solid rgba(26, 26, 20, 0.35);
-      border-radius: 999px;
-      padding: 14px 24px;
-      transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.2s;
-    }
-    .about-story-cta:hover {
-      background: var(--text-dark);
-      color: var(--cream);
-      border-color: var(--text-dark);
-      transform: translateY(-1px);
-    }
-    .about-story-cta:focus-visible {
-      outline: 2px solid var(--gold);
-      outline-offset: 3px;
-    }
-
     /* ─── Stats Bar ──────────────────────────────────── */
     .stats-bar {
       background: var(--olive);
@@ -839,6 +804,37 @@
       transition: background 0.4s;
     }
     .photo-tile:hover::after { background: rgba(14,18,9,0.05); }
+
+    /* Mirror of Tanzania grid: wide tile on the right, reversed row heights */
+    .photo-grid--reversed {
+      grid-template-columns: 1fr 1fr 2fr;
+      grid-template-rows: 300px 400px;
+    }
+    .photo-grid--reversed .photo-tile:first-child {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+    }
+    .photo-grid--reversed .photo-tile:nth-child(2) {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .photo-grid--reversed .photo-tile:nth-child(3) {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .photo-grid--reversed .photo-tile:nth-child(4) {
+      grid-column: 1;
+      grid-row: 2;
+    }
+    .photo-grid--reversed .photo-tile:nth-child(5) {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .custom-collage-strip {
+      background: var(--dark);
+      border-top: 1px solid rgba(240, 230, 211, 0.07);
+    }
 
     /* ─── Itinerary ──────────────────────────────────── */
     #itinerary {
@@ -1321,18 +1317,15 @@
 
     /* ─── Custom Itinerary ──────────────────────────── */
     #custom-itinerary {
-      background: var(--dark);
+      background: var(--cream);
+      color: var(--text-dark);
       padding: 140px 0;
-      border-top: 1px solid rgba(240, 230, 211, 0.07);
+      border-top: none;
     }
     .custom-inner {
-      max-width: 1280px;
+      max-width: 720px;
       margin: 0 auto;
       padding: 0 64px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 100px;
-      align-items: start;
     }
     .custom-eyebrow {
       font-family: 'Chainprinter', monospace;
@@ -1346,7 +1339,7 @@
       font-size: clamp(2.4rem, 4vw, 4rem);
       font-weight: 800;
       line-height: 0.95;
-      color: var(--cream);
+      color: var(--text-dark);
       letter-spacing: -0.02em;
       margin-bottom: 28px;
     }
@@ -1356,68 +1349,41 @@
       font-weight: 400;
     }
     .custom-body {
-      font-size: 1rem;
-      line-height: 1.75;
-      color: rgba(240, 230, 211, 0.6);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: rgba(26, 26, 20, 0.6);
       margin-bottom: 20px;
     }
-    .custom-note {
-      font-size: 0.88rem;
-      line-height: 1.7;
-      color: rgba(240, 230, 211, 0.38);
-      margin-bottom: 40px;
-      font-style: italic;
+    .custom-body + .custom-body {
+      margin-top: 4px;
+    }
+    .custom-cta-wrap {
+      margin-top: 36px;
     }
     .custom-cta {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: var(--cream);
-      color: var(--dark);
+      background: transparent;
+      color: var(--text-dark);
+      border: 1px solid rgba(26, 26, 20, 0.35);
       font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       padding: 14px 32px;
       border-radius: 100px;
-      transition: background 0.25s;
+      transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.2s;
     }
-    .custom-cta:hover { background: #fff; }
-    .custom-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .custom-card {
-      background: rgba(240, 230, 211, 0.03);
-      border: 1px solid rgba(240, 230, 211, 0.09);
-      border-radius: 14px;
-      padding: 32px 36px;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .custom-card:hover {
-      border-color: rgba(196, 169, 107, 0.35);
-      background: rgba(196, 169, 107, 0.04);
-    }
-    .custom-card-label {
-      font-family: 'Chainprinter', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-    .custom-card-name {
-      font-size: 1.1rem;
-      font-weight: 700;
+    .custom-cta:hover {
+      background: var(--text-dark);
       color: var(--cream);
-      letter-spacing: -0.01em;
-      margin-bottom: 8px;
+      border-color: var(--text-dark);
+      transform: translateY(-1px);
     }
-    .custom-card-desc {
-      font-size: 0.88rem;
-      line-height: 1.65;
-      color: rgba(240, 230, 211, 0.5);
+    .custom-cta:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
     }
 
     /* ─── Contact ────────────────────────────────────── */
@@ -1816,7 +1782,7 @@
       nav.scrolled { padding: 14px 32px; }
       .nav-links { gap: 24px; }
       .container { padding: 0 32px; }
-      .hero-content { padding: 0 40px 60px; }
+      .hero-content { padding: 0 clamp(32px, 6vw, 72px) 60px; }
       .manifesto-values { grid-template-columns: 1fr; }
       .manifesto-value-card { min-height: 300px; }
       .manifesto-value-title { font-size: clamp(1.2rem, 5.2vw, 1.6rem); }
@@ -1824,13 +1790,20 @@
       .about-photo-side { height: 50vh; }
       .about-text-side { padding: 64px 40px; }
       .about-scrapbook { margin-right: 0; }
-      .about-story-cta-wrap { margin-top: 24px; }
       .stats-header { padding: 0 32px; }
       .stats-inner { grid-template-columns: repeat(3, 1fr); padding: 0 32px; }
       .tanzania-header { grid-template-columns: 1fr; gap: 32px; padding: 0 32px 60px; }
       .tanzania-copy { grid-column: 1; }
       .photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
       .photo-tile:first-child { grid-row: auto; }
+      .photo-grid--reversed .photo-tile:first-child,
+      .photo-grid--reversed .photo-tile:nth-child(2),
+      .photo-grid--reversed .photo-tile:nth-child(3),
+      .photo-grid--reversed .photo-tile:nth-child(4),
+      .photo-grid--reversed .photo-tile:nth-child(5) {
+        grid-column: auto;
+        grid-row: auto;
+      }
       .itinerary-header { grid-template-columns: 1fr; gap: 32px; padding: 0 32px 60px; }
       .itinerary-days { padding: 0 32px; }
       .day-row { grid-template-columns: 60px 1fr; }
@@ -1846,7 +1819,7 @@
       .lodges-label { padding: 0 32px; }
       .lodges-grid { grid-template-columns: 1fr; padding: 0 32px; }
       .pricing-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
-      .custom-inner { gap: 60px; padding: 0 32px; }
+      .custom-inner { padding: 0 32px; }
       .contact-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
       .form-row { grid-template-columns: 1fr; }
       .footer-inner { padding: 0 32px; }
@@ -1917,7 +1890,7 @@
         letter-spacing: 0.14em;
         text-transform: uppercase;
       }
-      .hero-content { padding: 0 24px 80px; }
+      .hero-content { padding: 0 clamp(24px, 8vw, 40px) 80px; }
       .hero-wordmark { font-size: clamp(3.2rem, 14vw, 4.8rem); letter-spacing: 0.03em; }
       .hero-script { font-size: clamp(1.5rem, 8vw, 2.25rem); }
       .hero-dates-row { gap: 10px; margin-bottom: 0; }
@@ -1939,17 +1912,12 @@
         flex-direction: column;
         gap: 20px;
       }
-      .about-story-cta {
-        width: 100%;
-        padding: 14px 18px;
-      }
       .stat-item + .stat-item { border-left: none; border-top: 1px solid rgba(240, 230, 211, 0.15); padding-top: 32px; }
       .photo-grid { grid-template-columns: 1fr; grid-template-rows: 300px 240px 240px; }
       .photo-tile:nth-child(n+4) { display: none; }
       .lodges-grid { grid-template-columns: 1fr; }
       #manifesto, #itinerary, #pricing, #custom-itinerary, #contact { padding: 80px 0; }
       .manifesto-inner, .itinerary-header, .pricing-inner, .custom-inner, .contact-inner { padding: 0 24px; }
-      .custom-inner { grid-template-columns: 1fr; gap: 48px; }
       .itinerary-days { padding: 0 24px; }
       .lodge-item.open .lodge-panel { max-height: 460px; }
       .lodge-panel .gallery-photo { height: 260px; }
@@ -1986,7 +1954,7 @@
     <ul class="nav-links">
       <li><a href="#about">Our Story</a></li>
       <li><a href="#group-trips">2027 Group Trips</a></li>
-      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#custom-itinerary">Custom Safaris</a></li>
     </ul>
     <a href="#" class="nav-cta open-intake-modal">Save your spot</a>
     <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-menu" aria-label="Open site menu">
@@ -1998,7 +1966,7 @@
       <ul class="mobile-nav-links">
         <li><a href="#about">Our Story</a></li>
         <li><a href="#group-trips">2027 Group Trips</a></li>
-        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#custom-itinerary">Custom Safaris</a></li>
       </ul>
       <a href="#" class="mobile-nav-cta open-intake-modal">Save your spot</a>
     </div>
@@ -2030,7 +1998,7 @@
           <p class="hero-script">Tours and Explorations</p>
         </div>
 
-        <p class="hero-tagline">An 11-day expedition through Tanzania.<span class="hero-tagline-line2">Led by Trevor &amp; Jesse Borden, two brothers that love sharing the places that have shaped their entire lives.</span></p>
+        <p class="hero-tagline">Organizing and guiding safaris in Tanzania since 2009, Old Mountain is led by Jesse and Trevor Borden, two brothers who love sharing the places that have shaped who they are.</p>
 
         <div class="hero-cta-group">
           <p class="hero-cta-label">12 guests per departure • Limited seats</p>
@@ -2107,9 +2075,6 @@
             <p class="about-name-title">Co-Founder</p>
             <p class="about-name">Trevor Borden</p>
           </div>
-        </div>
-        <div class="about-story-cta-wrap reveal reveal-delay-4">
-          <a class="about-story-cta" href="./about/index.html">Learn more about us</a>
         </div>
       </div>
     </div>
@@ -2452,43 +2417,41 @@
 
   </section>
 
+  <div class="custom-collage-strip">
+    <div class="photo-grid photo-grid--reversed reveal">
+      <div class="photo-tile">
+        <img src="photos/hero/elephants-trail.webp" alt="Elephants moving across the Tanzanian savanna" loading="lazy">
+      </div>
+      <div class="photo-tile">
+        <img src="photos/about/lengai.jpg" alt="Ol Doinyo Lengai at dusk" loading="lazy">
+      </div>
+      <div class="photo-tile">
+        <img src="photos/hero/campfire-night.webp" alt="Evening light around camp" loading="lazy">
+      </div>
+      <div class="photo-tile">
+        <img src="photos/safari/pioneer-camp/image_processing20250306-1-d2wo8j-1.jpg" alt="Tented camp in the bush" loading="lazy">
+      </div>
+      <div class="photo-tile">
+        <img src="photos/hero/waterfall.webp" alt="Waterfall in lush highlands" loading="lazy">
+      </div>
+    </div>
+  </div>
+
   <!-- ── Custom Itinerary ─────────────────────────────── -->
   <section id="custom-itinerary">
     <div class="custom-inner">
-      <div class="custom-left">
-        <p class="custom-eyebrow reveal">Private Expeditions</p>
-        <h2 class="custom-title reveal reveal-delay-1">
-          Your Trip,<br><em>Your Way.</em>
-        </h2>
-        <p class="custom-body reveal reveal-delay-2">
-          Not every great adventure fits a group calendar. If you want to move on your own schedule, explore at your own pace, and build an experience shaped entirely around you — that is exactly what we do.
-        </p>
-        <p class="custom-body reveal reveal-delay-2">
-          Custom trip planning is one of Old Mountain's most requested services. We have designed private expeditions ranging from four-day quick escapes to three-week deep dives into the wild. Every itinerary is built from scratch — your dates, your destinations, your pace. No fixed group, no shared agenda.
-        </p>
-        <p class="custom-note reveal reveal-delay-3">We design trips for solo travelers, couples, multi-generational families, friend groups, and private parties of any size. Any length. Any combination.</p>
-        <div class="reveal reveal-delay-4">
-          <a class="custom-cta" href="#contact">Start planning your trip</a>
-        </div>
-      </div>
-      <div class="custom-right">
-        <div class="custom-cards">
-          <div class="custom-card reveal reveal-delay-1">
-            <p class="custom-card-label">Solo &amp; Couples</p>
-            <p class="custom-card-name">Travel on Your Terms</p>
-            <p class="custom-card-desc">Full Old Mountain expertise, entirely for you. Linger longer where it matters, skip what doesn't, and move at a pace that feels like yours — not a group's.</p>
-          </div>
-          <div class="custom-card reveal reveal-delay-2">
-            <p class="custom-card-label">Families</p>
-            <p class="custom-card-name">An Expedition for All Ages</p>
-            <p class="custom-card-desc">Multi-generational adventures built around how families actually travel. We plan every detail — activities, pacing, accommodation — so kids and adults alike arrive energized and stay that way.</p>
-          </div>
-          <div class="custom-card reveal reveal-delay-3">
-            <p class="custom-card-label">Private Groups</p>
-            <p class="custom-card-name">Your Group, Exclusively</p>
-            <p class="custom-card-desc">Friend groups, milestone celebrations, corporate retreats. We take over the planning entirely and deliver an experience that feels wholly your own — from the first sunrise drive to the last fire-side evening.</p>
-          </div>
-        </div>
+      <p class="custom-eyebrow reveal">Private expeditions tailored for you</p>
+      <h2 class="custom-title reveal reveal-delay-1">
+        Your Trip,<br><em>Your Way.</em>
+      </h2>
+      <p class="custom-body reveal reveal-delay-2">
+        Not interested in traveling with a group? That is more than fine. Custom trip planning is one of our joys: getting to know you and helping craft an experience around your interests and your pace — that work has its own kind of reward for us.
+      </p>
+      <p class="custom-body reveal reveal-delay-3">
+        Whether you are on your own, with a partner, or bringing your own group, we are glad to help. Plenty of people come to us for Kilimanjaro, Zanzibar, or windows when they can travel only certain dates in the year. None of that is a problem.
+      </p>
+      <div class="custom-cta-wrap reveal reveal-delay-4">
+        <a class="custom-cta open-intake-modal" href="#">Start planning your trip</a>
       </div>
     </div>
   </section>
