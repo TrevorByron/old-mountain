@@ -668,7 +668,8 @@
       margin: 0 auto;
       padding: 0 64px;
     }
-    #tanzania .stats-inner {
+    #tanzania .stats-inner,
+    #custom-itinerary .stats-inner {
       margin-bottom: 64px;
     }
     .stat-item {
@@ -829,11 +830,6 @@
     .photo-grid--reversed .photo-tile:nth-child(5) {
       grid-column: 2;
       grid-row: 2;
-    }
-
-    .custom-collage-strip {
-      background: var(--dark);
-      border-top: 1px solid rgba(240, 230, 211, 0.07);
     }
 
     /* ─── Itinerary ──────────────────────────────────── */
@@ -1315,52 +1311,34 @@
       background: rgba(196, 169, 107, 0.08);
     }
 
-    /* ─── Custom Itinerary ──────────────────────────── */
+    /* ─── Custom Itinerary (Tanzania layout, #itinerary light palette) ── */
     #custom-itinerary {
       background: var(--cream);
       color: var(--text-dark);
       padding: 140px 0;
-      border-top: none;
     }
-    .custom-inner {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 0 64px;
-    }
-    .custom-eyebrow {
-      font-family: 'Chainprinter', monospace;
-      font-size: 1rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
-    .custom-title {
-      font-size: clamp(2.4rem, 4vw, 4rem);
-      font-weight: 800;
-      line-height: 0.95;
+    #custom-itinerary .section-title {
       color: var(--text-dark);
-      letter-spacing: -0.02em;
-      margin-bottom: 28px;
     }
-    .custom-title em {
-      font-style: normal;
-      font-family: 'Sunday April', serif;
-      font-weight: 400;
+    #custom-itinerary .section-subline {
+      color: rgba(26, 26, 20, 0.52);
     }
-    .custom-body {
-      font-size: 1.05rem;
-      line-height: 1.7;
+    #custom-itinerary .section-desc {
       color: rgba(26, 26, 20, 0.6);
-      margin-bottom: 20px;
     }
-    .custom-body + .custom-body {
-      margin-top: 4px;
+    #custom-itinerary .stat-item + .stat-item {
+      border-left-color: rgba(26, 26, 20, 0.12);
     }
-    .custom-cta-wrap {
-      margin-top: 36px;
+    #custom-itinerary .stat-number {
+      color: var(--text-dark);
     }
-    .custom-cta {
+    #custom-itinerary .stat-label {
+      color: rgba(26, 26, 20, 0.45);
+    }
+    #custom-itinerary .custom-cta-wrap {
+      margin-top: 8px;
+    }
+    #custom-itinerary .custom-cta {
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -1375,13 +1353,13 @@
       border-radius: 100px;
       transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.2s;
     }
-    .custom-cta:hover {
+    #custom-itinerary .custom-cta:hover {
       background: var(--text-dark);
       color: var(--cream);
       border-color: var(--text-dark);
       transform: translateY(-1px);
     }
-    .custom-cta:focus-visible {
+    #custom-itinerary .custom-cta:focus-visible {
       outline: 2px solid var(--gold);
       outline-offset: 3px;
     }
@@ -1819,7 +1797,6 @@
       .lodges-label { padding: 0 32px; }
       .lodges-grid { grid-template-columns: 1fr; padding: 0 32px; }
       .pricing-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
-      .custom-inner { padding: 0 32px; }
       .contact-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
       .form-row { grid-template-columns: 1fr; }
       .footer-inner { padding: 0 32px; }
@@ -1913,11 +1890,12 @@
         gap: 20px;
       }
       .stat-item + .stat-item { border-left: none; border-top: 1px solid rgba(240, 230, 211, 0.15); padding-top: 32px; }
+      #custom-itinerary .stat-item + .stat-item { border-top: 1px solid rgba(26, 26, 20, 0.12); }
       .photo-grid { grid-template-columns: 1fr; grid-template-rows: 300px 240px 240px; }
       .photo-tile:nth-child(n+4) { display: none; }
       .lodges-grid { grid-template-columns: 1fr; }
       #manifesto, #itinerary, #pricing, #custom-itinerary, #contact { padding: 80px 0; }
-      .manifesto-inner, .itinerary-header, .pricing-inner, .custom-inner, .contact-inner { padding: 0 24px; }
+      .manifesto-inner, .itinerary-header, .pricing-inner, .contact-inner { padding: 0 24px; }
       .itinerary-days { padding: 0 24px; }
       .lodge-item.open .lodge-panel { max-height: 460px; }
       .lodge-panel .gallery-photo { height: 260px; }
@@ -1952,9 +1930,9 @@
       <img src="logo/Logo.svg" alt="Old Mountain Tours and Explorations">
     </a>
     <ul class="nav-links">
-      <li><a href="#about">Our Story</a></li>
       <li><a href="#group-trips">2027 Group Trips</a></li>
       <li><a href="#custom-itinerary">Custom Safaris</a></li>
+      <li><a href="#about">Our Story</a></li>
     </ul>
     <a href="#" class="nav-cta open-intake-modal">Save your 2027 spot</a>
     <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-menu" aria-label="Open site menu">
@@ -1964,9 +1942,9 @@
     </button>
     <div class="mobile-nav-menu" id="mobile-nav-menu">
       <ul class="mobile-nav-links">
-        <li><a href="#about">Our Story</a></li>
         <li><a href="#group-trips">2027 Group Trips</a></li>
         <li><a href="#custom-itinerary">Custom Safaris</a></li>
+        <li><a href="#about">Our Story</a></li>
       </ul>
       <a href="#" class="mobile-nav-cta open-intake-modal">Save your 2027 spot</a>
     </div>
@@ -2004,76 +1982,6 @@
           <p class="hero-cta-label">The 2027 Group Safaris are filling up now</p>
           <div class="hero-actions">
             <a href="#" class="btn-primary open-intake-modal">Save your spot</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- ── Manifesto ─────────────────────────────────── -->
-  <section id="manifesto">
-    <div class="container">
-      <div class="manifesto-inner">
-        <p class="manifesto-label manifesto-label-left reveal">Our Values:</p>
-        <div class="manifesto-values">
-          <article class="manifesto-value-card reveal reveal-delay-1">
-            <img src="photos/about/h-water.jpg" alt="Traveler wading near a waterfall in Tanzania" loading="lazy">
-            <div class="manifesto-value-text">
-              <p class="manifesto-value-label">Transforming</p>
-              <p class="manifesto-value-title">Adventures that stay with you for life.</p>
-            </div>
-          </article>
-          <article class="manifesto-value-card reveal reveal-delay-2">
-            <img src="photos/about/lengai.jpg" alt="Ol Doinyo Lengai at dusk in Tanzania" loading="lazy">
-            <div class="manifesto-value-text">
-              <p class="manifesto-value-label">Inspiring</p>
-              <p class="manifesto-value-title">Sparking curiosity and cultivating wonder.</p>
-            </div>
-          </article>
-          <article class="manifesto-value-card reveal reveal-delay-3">
-            <img src="photos/safari/hadzabe/image_processing20260119-1-f4jh6l.jpg" alt="Hadzabe arrows carried by hand in Tanzania" loading="lazy">
-            <div class="manifesto-value-text">
-              <p class="manifesto-value-label">Grounding</p>
-              <p class="manifesto-value-title">Connecting with people and place.</p>
-            </div>
-          </article>
-        </div>
-        <p class="manifesto-label reveal reveal-delay-1">Our Philosophy:</p>
-        <p class="manifesto-copy reveal reveal-delay-1">We believe travel, when done right, has the power to expand our worlds, shake us from our ruts, and connect us deeply to each other and the earth. All safari companies will show you the Serengeti, but these trips are often consumed through a window. We invite you to come with us beyond the air conditioned window view into something more immersive, more powerfully wild, and more authentic. We do this by limiting our trips to 12 guests, relying on decades of relationships on the ground, and carefully crafting itineraries to go to our favorite places.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── About / Brothers ──────────────────────────── -->
-  <section id="about">
-    <div class="about-grid">
-      <div class="about-photo-side">
-        <img src="photos/about/motos.webp" alt="Jesse and Trevor Borden in East Africa">
-        <div class="about-photo-overlay"></div>
-      </div>
-      <div class="about-text-side">
-        <p class="section-eyebrow reveal">Your guides along the journey.</p>
-        <h2 class="about-headline reveal reveal-delay-1">
-          Rooted There.<br>Fluent <em>Here.</em>
-        </h2>
-        <div class="about-body reveal reveal-delay-2">
-          <p>Jesse and Trevor grew up in the mountains of East Africa, spent their high school years on Portugal's Atlantic coast, and eventually found their way to California for college. Along the way, they built deep ties to people and places around the world and learned to move comfortably between the cultures and countries they have called home. They know what it means to chase adventure, and they design trips that blend outrageous fun, wild new places, and always, well made mixed drinks.</p>
-          <p>Jesse is a conservation ecologist with a PhD in interdisciplinary ecology and more than a decade of experience leading expeditions across East Africa, Central America, and the Arabian Peninsula. Trevor has been organizing trips and guiding groups in East Africa and Portugal since he was 19. After bikepacking across Europe and Mexico, backpacking through the Rift Valley, and motorcycling across much of East Africa, he is an expert at building adventures that are both distinctive and seamless. Together, they have traveled across six continents and lived long term on three, bringing the kind of insight you cannot find in a brochure and the kind of care that makes it feel like traveling with family.</p>
-          <p>When you travel with Old Mountain, you are not handing your trip to a company; you are joining an adventure with expert guides who are excited to share the places and experiences that shaped their lives. They make sure you have what you need at every step and come home knowing you did it right.</p>
-          <figure class="about-scrapbook">
-            <img src="photos/about/childhood-trevor.png" alt="Jesse and Trevor as children in East Africa" loading="lazy">
-            <figcaption>Jesse and Trevor in 1994.</figcaption>
-          </figure>
-        </div>
-        <div class="about-names reveal reveal-delay-3">
-          <div class="about-name-card">
-            <p class="about-name-title">Co-Founder</p>
-            <p class="about-name">Jesse Borden</p>
-          </div>
-          <div class="about-name-card">
-            <p class="about-name-title">Co-Founder</p>
-            <p class="about-name">Trevor Borden</p>
           </div>
         </div>
       </div>
@@ -2417,8 +2325,38 @@
 
   </section>
 
-  <div class="custom-collage-strip">
-    <div class="photo-grid photo-grid--reversed reveal">
+  <!-- ── Custom Itinerary ─────────────────────────────── -->
+  <section id="custom-itinerary">
+    <div class="tanzania-header">
+      <div class="reveal">
+        <p class="section-kicker">Private expeditions tailored for you</p>
+        <h2 class="section-title">Your Trip,<br><em>Your Way.</em></h2>
+        <p class="section-subline">Crafted around your interests and your pace</p>
+      </div>
+      <div class="tanzania-copy">
+        <p class="section-desc reveal reveal-delay-2">
+          Not interested in traveling with a group? That is more than fine. Custom trip planning is one of our joys: getting to know you and helping craft an experience around your interests and your pace — that work has its own kind of reward for us. Whether you are on your own, with a partner, or bringing your own group, we are glad to help.
+        </p>
+        <div class="custom-cta-wrap reveal reveal-delay-3">
+          <a class="custom-cta open-intake-modal" href="#">Start planning your trip</a>
+        </div>
+      </div>
+    </div>
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <p class="stat-number">100%</p>
+        <p class="stat-label">Tailored design</p>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <p class="stat-number">365</p>
+        <p class="stat-label">Dates we can plan for</p>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <p class="stat-number">1</p>
+        <p class="stat-label">Private party focus</p>
+      </div>
+    </div>
+    <div class="photo-grid reveal">
       <div class="photo-tile">
         <img src="photos/hero/elephants-trail.webp" alt="Elephants moving across the Tanzanian savanna" loading="lazy">
       </div>
@@ -2435,23 +2373,74 @@
         <img src="photos/hero/waterfall.webp" alt="Waterfall in lush highlands" loading="lazy">
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- ── Custom Itinerary ─────────────────────────────── -->
-  <section id="custom-itinerary">
-    <div class="custom-inner">
-      <p class="custom-eyebrow reveal">Private expeditions tailored for you</p>
-      <h2 class="custom-title reveal reveal-delay-1">
-        Your Trip,<br><em>Your Way.</em>
-      </h2>
-      <p class="custom-body reveal reveal-delay-2">
-        Not interested in traveling with a group? That is more than fine. Custom trip planning is one of our joys: getting to know you and helping craft an experience around your interests and your pace — that work has its own kind of reward for us.
-      </p>
-      <p class="custom-body reveal reveal-delay-3">
-        Whether you are on your own, with a partner, or bringing your own group, we are glad to help. Plenty of people come to us for Kilimanjaro, Zanzibar, or windows when they can travel only certain dates in the year. None of that is a problem.
-      </p>
-      <div class="custom-cta-wrap reveal reveal-delay-4">
-        <a class="custom-cta open-intake-modal" href="#">Start planning your trip</a>
+  <!-- ── About / Brothers ──────────────────────────── -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-photo-side">
+        <img src="photos/about/motos.webp" alt="Jesse and Trevor Borden in East Africa">
+        <div class="about-photo-overlay"></div>
+      </div>
+      <div class="about-text-side">
+        <p class="section-eyebrow reveal">Your guides along the journey.</p>
+        <h2 class="about-headline reveal reveal-delay-1">
+          Rooted There.<br>Fluent <em>Here.</em>
+        </h2>
+        <div class="about-body reveal reveal-delay-2">
+          <p>Jesse and Trevor grew up in the mountains of East Africa, spent their high school years on Portugal's Atlantic coast, and eventually found their way to California for college. Along the way, they built deep ties to people and places around the world and learned to move comfortably between the cultures and countries they have called home. They know what it means to chase adventure, and they design trips that blend outrageous fun, wild new places, and always, well made mixed drinks.</p>
+          <p>Jesse is a conservation ecologist with a PhD in interdisciplinary ecology and more than a decade of experience leading expeditions across East Africa, Central America, and the Arabian Peninsula. Trevor has been organizing trips and guiding groups in East Africa and Portugal since he was 19. After bikepacking across Europe and Mexico, backpacking through the Rift Valley, and motorcycling across much of East Africa, he is an expert at building adventures that are both distinctive and seamless. Together, they have traveled across six continents and lived long term on three, bringing the kind of insight you cannot find in a brochure and the kind of care that makes it feel like traveling with family.</p>
+          <p>When you travel with Old Mountain, you are not handing your trip to a company; you are joining an adventure with expert guides who are excited to share the places and experiences that shaped their lives. They make sure you have what you need at every step and come home knowing you did it right.</p>
+          <figure class="about-scrapbook">
+            <img src="photos/about/childhood-trevor.png" alt="Jesse and Trevor as children in East Africa" loading="lazy">
+            <figcaption>Jesse and Trevor in 1994.</figcaption>
+          </figure>
+        </div>
+        <div class="about-names reveal reveal-delay-3">
+          <div class="about-name-card">
+            <p class="about-name-title">Co-Founder</p>
+            <p class="about-name">Jesse Borden</p>
+          </div>
+          <div class="about-name-card">
+            <p class="about-name-title">Co-Founder</p>
+            <p class="about-name">Trevor Borden</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── Manifesto ─────────────────────────────────── -->
+  <section id="manifesto">
+    <div class="container">
+      <div class="manifesto-inner">
+        <p class="manifesto-label manifesto-label-left reveal">Our Values:</p>
+        <div class="manifesto-values">
+          <article class="manifesto-value-card reveal reveal-delay-1">
+            <img src="photos/about/h-water.jpg" alt="Traveler wading near a waterfall in Tanzania" loading="lazy">
+            <div class="manifesto-value-text">
+              <p class="manifesto-value-label">Transforming</p>
+              <p class="manifesto-value-title">Adventures that stay with you for life.</p>
+            </div>
+          </article>
+          <article class="manifesto-value-card reveal reveal-delay-2">
+            <img src="photos/about/lengai.jpg" alt="Ol Doinyo Lengai at dusk in Tanzania" loading="lazy">
+            <div class="manifesto-value-text">
+              <p class="manifesto-value-label">Inspiring</p>
+              <p class="manifesto-value-title">Sparking curiosity and cultivating wonder.</p>
+            </div>
+          </article>
+          <article class="manifesto-value-card reveal reveal-delay-3">
+            <img src="photos/safari/hadzabe/image_processing20260119-1-f4jh6l.jpg" alt="Hadzabe arrows carried by hand in Tanzania" loading="lazy">
+            <div class="manifesto-value-text">
+              <p class="manifesto-value-label">Grounding</p>
+              <p class="manifesto-value-title">Connecting with people and place.</p>
+            </div>
+          </article>
+        </div>
+        <p class="manifesto-label reveal reveal-delay-1">Our Philosophy:</p>
+        <p class="manifesto-copy reveal reveal-delay-1">We believe travel, when done right, has the power to expand our worlds, shake us from our ruts, and connect us deeply to each other and the earth. All safari companies will show you the Serengeti, but these trips are often consumed through a window. We invite you to come with us beyond the air conditioned window view into something more immersive, more powerfully wild, and more authentic. We do this by limiting our trips to 12 guests, relying on decades of relationships on the ground, and carefully crafting itineraries to go to our favorite places.</p>
       </div>
     </div>
   </section>
@@ -2464,9 +2453,9 @@
           <img src="logo/Logo.svg" alt="Old Mountain Tours and Explorations">
         </a>
         <ul class="footer-links">
-          <li><a href="#about">Our Story</a></li>
           <li><a href="#group-trips">2027 Group Trips</a></li>
           <li><a href="#custom-itinerary">Custom Safaris</a></li>
+          <li><a href="#about">Our Story</a></li>
         </ul>
       </div>
       <div class="footer-bottom">
