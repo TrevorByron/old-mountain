@@ -444,13 +444,17 @@
       text-transform: uppercase;
       color: var(--gold);
       padding-top: 0;
+      text-align: center;
+    }
+    .manifesto-label-left {
+      text-align: left;
     }
     .manifesto-copy {
       width: 100%;
-      max-width: none;
+      max-width: 980px;
       margin: 0 auto;
-      font-size: 1.08rem;
-      line-height: 1.85;
+      font-size: 1.4rem;
+      line-height: 1.62;
       color: rgba(240, 230, 211, 0.88);
       text-align: center;
     }
@@ -636,7 +640,7 @@
       border-top: 1px solid rgba(26, 26, 20, 0.15);
     }
     .about-name-title {
-      font-size: 0.7rem;
+      font-size: 1rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: rgba(26, 26, 20, 0.45);
@@ -771,6 +775,27 @@
       line-height: 1.7;
       color: rgba(240, 230, 211, 0.6);
       align-self: end;
+    }
+    .tanzania-copy {
+      grid-column: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-self: end;
+    }
+    .tanzania-copy .section-desc {
+      align-self: flex-start;
+      text-align: left;
+    }
+    .tanzania-dates {
+      font-family: 'Roboto', var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+      line-height: 1.4;
     }
 
     .photo-grid {
@@ -1025,7 +1050,7 @@
       align-items: center;
       gap: 6px;
       font-family: 'Chainprinter', monospace;
-      font-size: 0.55rem;
+      font-size: 0.7rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: rgba(240, 230, 211, 0.35);
@@ -1702,6 +1727,7 @@
       .stats-header { padding: 0 32px; }
       .stats-inner { grid-template-columns: repeat(3, 1fr); padding: 0 32px; }
       .tanzania-header { grid-template-columns: 1fr; gap: 32px; padding: 0 32px 60px; }
+      .tanzania-copy { grid-column: 1; }
       .photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
       .photo-tile:first-child { grid-row: auto; }
       .itinerary-header { grid-template-columns: 1fr; gap: 32px; padding: 0 32px 60px; }
@@ -1856,7 +1882,7 @@
     </a>
     <ul class="nav-links">
       <li><a href="#about">Our Story</a></li>
-      <li><a href="#itinerary">The Journey</a></li>
+      <li><a href="#group-trips">2027 Group Trips</a></li>
       <li><a href="#pricing">Pricing</a></li>
     </ul>
     <a href="#" class="nav-cta open-intake-modal">Save your spot</a>
@@ -1868,7 +1894,7 @@
     <div class="mobile-nav-menu" id="mobile-nav-menu">
       <ul class="mobile-nav-links">
         <li><a href="#about">Our Story</a></li>
-        <li><a href="#itinerary">The Journey</a></li>
+        <li><a href="#group-trips">2027 Group Trips</a></li>
         <li><a href="#pricing">Pricing</a></li>
       </ul>
       <a href="#" class="mobile-nav-cta open-intake-modal">Save your spot</a>
@@ -1918,7 +1944,7 @@
   <section id="manifesto">
     <div class="container">
       <div class="manifesto-inner">
-        <p class="manifesto-label reveal">Our Values:</p>
+        <p class="manifesto-label manifesto-label-left reveal">Our Values:</p>
         <div class="manifesto-values">
           <article class="manifesto-value-card reveal reveal-delay-1">
             <img src="photos/about/h-water.jpg" alt="Traveler wading near a waterfall in Tanzania" loading="lazy">
@@ -1962,7 +1988,7 @@
         </h2>
         <div class="about-body reveal reveal-delay-2">
           <p>Jesse and Trevor grew up in the mountains of East Africa, spent their high school years on Portugal's Atlantic coast, and eventually found their way to California for college. Along the way, they built deep ties to people and places around the world and learned to move comfortably between the cultures and countries they have called home. They know what it means to chase adventure, and they design trips that blend outrageous fun, wild new places, and always, well made mixed drinks.</p>
-          <p>Jesse is a conservation ecologist with a PhD in interdisciplinary ecology and more than a decade leading expeditions across East Africa, Central America, the Arabian Peninsula, and beyond. Trevor has been organizing trips and guiding groups in East Africa since he was 19. After bikepacking across Europe and Mexico, backpacking through the Rift Valley, and motorcycling across much of East Africa, he has a knack for building adventures that are both distinctive and seamless. Together, they have traveled across six continents and lived long term on three, bringing the kind of insight you cannot find in a brochure and the kind of care that makes it feel like traveling with family.</p>
+          <p>Jesse is a conservation ecologist with a PhD in interdisciplinary ecology and more than a decade of experience leading expeditions across East Africa, Central America, and the Arabian Peninsula. Trevor has been organizing trips and guiding groups in East Africa and Portugal since he was 19. After bikepacking across Europe and Mexico, backpacking through the Rift Valley, and motorcycling across much of East Africa, he is an expert at building adventures that are both distinctive and seamless. Together, they have traveled across six continents and lived long term on three, bringing the kind of insight you cannot find in a brochure and the kind of care that makes it feel like traveling with family.</p>
           <p>When you travel with Old Mountain, you are not handing your trip to a company; you are joining an adventure with expert guides who are excited to share the places and experiences that shaped their lives. They make sure you have what you need at every step and come home knowing you did it right.</p>
           <figure class="about-scrapbook">
             <img src="photos/about/childhood-trevor.png" alt="Jesse and Trevor as children in East Africa" loading="lazy">
@@ -1987,17 +2013,25 @@
 
   </section>
 
+  <!-- ── Group Trips ────────────────────────────────── -->
+  <section id="group-trips">
+
   <!-- ── Tanzania ───────────────────────────────────── -->
   <section id="tanzania">
     <div class="tanzania-header">
       <div class="reveal">
-        <p class="section-kicker">The 2027 offerings:</p>
+        <p class="section-kicker">The 2027 Group Trips:</p>
         <h2 class="section-title">Tanzania Beautiful</h2>
         <p class="section-subline">Come experience a land we've called home</p>
       </div>
-      <p class="section-desc reveal reveal-delay-2">
-        From the ancient traditions of the Hadzabe to the vast Serengeti plains, from the Ngorongoro Crater to the Ndutu wetlands — this journey is designed around what Old Mountain believes is the very best Tanzania has to offer. Built by people who call Africa home, it's an epic, deeply considered experience you can feel confident in.
-      </p>
+      <div class="tanzania-copy">
+        <p class="section-desc reveal reveal-delay-2">
+          From the ancient traditions of the Hadzabe to the vast Serengeti plains, from the Ngorongoro Crater to the Ndutu wetlands — this journey is designed around what Old Mountain believes is the very best Tanzania has to offer. Built by people who call Africa home, it's an epic, deeply considered experience you can feel confident in.
+        </p>
+        <p class="section-desc tanzania-dates reveal reveal-delay-3">
+          2 Depature windows: Feb 2027 &amp; July 2027.
+        </p>
+      </div>
     </div>
     <div class="stats-inner">
       <div class="stat-item reveal">
@@ -2039,7 +2073,7 @@
         The<br><em>Journey.</em><br>Eleven days.
       </h2>
       <div class="itinerary-desc reveal reveal-delay-2">
-        <p>This journey reflects what we love most about Africa: being out in it up close, on the ground, under the stars, and falling asleep to the sounds beyond the tent. It also celebrates Africa's beauty from extraordinary, deeply comfortable places. We partner with Dorobo Safaris because they are rooted in this landscape and lead with a rare balance of expertise, respect for local communities, and genuinely soulful guiding. Together, we've curated the full spectrum - from tented walking experiences and community connection in the Manyara ecosystem to epic lodges, vast vistas, and unforgettable sundowners - so guests feel the true breadth of Africa.</p>
+        <p>This journey reflects what we love most about Africa: being out in it up close, on the ground, under the stars, and falling asleep to the sounds beyond the tent. It also celebrates Africa's beauty from extraordinary, deeply comfortable places.<br><br>We'll be partnering with Dorobo Safaris, our primary on the ground operator, because they are rooted in this landscape and lead with a rare balance of expertise, respect for local communities, and genuinely soulful guiding. Together, we've curated the full spectrum - from tented walking experiences and community connection in the Manyara ecosystem to epic lodges, vast vistas, and unforgettable sundowners - so guests feel the true breadth of Africa.</p>
         <p class="itinerary-subnote">Specific itinerary details are subject to change based on availability, travel dates, and group size.</p>
       </div>
     </div>
@@ -2311,6 +2345,8 @@
         </div>
       </div>
     </div>
+  </section>
+
   </section>
 
   <!-- ── Footer ─────────────────────────────────────── -->
