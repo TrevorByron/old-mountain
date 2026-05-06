@@ -1319,6 +1319,107 @@
       background: rgba(196, 169, 107, 0.08);
     }
 
+    /* ─── Custom Itinerary ──────────────────────────── */
+    #custom-itinerary {
+      background: var(--dark);
+      padding: 140px 0;
+      border-top: 1px solid rgba(240, 230, 211, 0.07);
+    }
+    .custom-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
+    }
+    .custom-eyebrow {
+      font-family: 'Chainprinter', monospace;
+      font-size: 1rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .custom-title {
+      font-size: clamp(2.4rem, 4vw, 4rem);
+      font-weight: 800;
+      line-height: 0.95;
+      color: var(--cream);
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+    .custom-title em {
+      font-style: normal;
+      font-family: 'Sunday April', serif;
+      font-weight: 400;
+    }
+    .custom-body {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(240, 230, 211, 0.6);
+      margin-bottom: 20px;
+    }
+    .custom-note {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: rgba(240, 230, 211, 0.38);
+      margin-bottom: 40px;
+      font-style: italic;
+    }
+    .custom-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--cream);
+      color: var(--dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border-radius: 100px;
+      transition: background 0.25s;
+    }
+    .custom-cta:hover { background: #fff; }
+    .custom-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .custom-card {
+      background: rgba(240, 230, 211, 0.03);
+      border: 1px solid rgba(240, 230, 211, 0.09);
+      border-radius: 14px;
+      padding: 32px 36px;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .custom-card:hover {
+      border-color: rgba(196, 169, 107, 0.35);
+      background: rgba(196, 169, 107, 0.04);
+    }
+    .custom-card-label {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .custom-card-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+    .custom-card-desc {
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: rgba(240, 230, 211, 0.5);
+    }
+
     /* ─── Contact ────────────────────────────────────── */
     #contact {
       background: var(--olive);
@@ -1745,6 +1846,7 @@
       .lodges-label { padding: 0 32px; }
       .lodges-grid { grid-template-columns: 1fr; padding: 0 32px; }
       .pricing-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
+      .custom-inner { gap: 60px; padding: 0 32px; }
       .contact-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
       .form-row { grid-template-columns: 1fr; }
       .footer-inner { padding: 0 32px; }
@@ -1845,8 +1947,9 @@
       .photo-grid { grid-template-columns: 1fr; grid-template-rows: 300px 240px 240px; }
       .photo-tile:nth-child(n+4) { display: none; }
       .lodges-grid { grid-template-columns: 1fr; }
-      #manifesto, #itinerary, #pricing, #contact { padding: 80px 0; }
-      .manifesto-inner, .itinerary-header, .pricing-inner, .contact-inner { padding: 0 24px; }
+      #manifesto, #itinerary, #pricing, #custom-itinerary, #contact { padding: 80px 0; }
+      .manifesto-inner, .itinerary-header, .pricing-inner, .custom-inner, .contact-inner { padding: 0 24px; }
+      .custom-inner { grid-template-columns: 1fr; gap: 48px; }
       .itinerary-days { padding: 0 24px; }
       .lodge-item.open .lodge-panel { max-height: 460px; }
       .lodge-panel .gallery-photo { height: 260px; }
@@ -2347,6 +2450,47 @@
     </div>
   </section>
 
+  </section>
+
+  <!-- ── Custom Itinerary ─────────────────────────────── -->
+  <section id="custom-itinerary">
+    <div class="custom-inner">
+      <div class="custom-left">
+        <p class="custom-eyebrow reveal">Private Expeditions</p>
+        <h2 class="custom-title reveal reveal-delay-1">
+          Your Trip,<br><em>Your Way.</em>
+        </h2>
+        <p class="custom-body reveal reveal-delay-2">
+          Not every great adventure fits a group calendar. If you want to move on your own schedule, explore at your own pace, and build an experience shaped entirely around you — that is exactly what we do.
+        </p>
+        <p class="custom-body reveal reveal-delay-2">
+          Custom trip planning is one of Old Mountain's most requested services. We have designed private expeditions ranging from four-day quick escapes to three-week deep dives into the wild. Every itinerary is built from scratch — your dates, your destinations, your pace. No fixed group, no shared agenda.
+        </p>
+        <p class="custom-note reveal reveal-delay-3">We design trips for solo travelers, couples, multi-generational families, friend groups, and private parties of any size. Any length. Any combination.</p>
+        <div class="reveal reveal-delay-4">
+          <a class="custom-cta" href="#contact">Start planning your trip</a>
+        </div>
+      </div>
+      <div class="custom-right">
+        <div class="custom-cards">
+          <div class="custom-card reveal reveal-delay-1">
+            <p class="custom-card-label">Solo &amp; Couples</p>
+            <p class="custom-card-name">Travel on Your Terms</p>
+            <p class="custom-card-desc">Full Old Mountain expertise, entirely for you. Linger longer where it matters, skip what doesn't, and move at a pace that feels like yours — not a group's.</p>
+          </div>
+          <div class="custom-card reveal reveal-delay-2">
+            <p class="custom-card-label">Families</p>
+            <p class="custom-card-name">An Expedition for All Ages</p>
+            <p class="custom-card-desc">Multi-generational adventures built around how families actually travel. We plan every detail — activities, pacing, accommodation — so kids and adults alike arrive energized and stay that way.</p>
+          </div>
+          <div class="custom-card reveal reveal-delay-3">
+            <p class="custom-card-label">Private Groups</p>
+            <p class="custom-card-name">Your Group, Exclusively</p>
+            <p class="custom-card-desc">Friend groups, milestone celebrations, corporate retreats. We take over the planning entirely and deliver an experience that feels wholly your own — from the first sunrise drive to the last fire-side evening.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ── Footer ─────────────────────────────────────── -->
