@@ -160,7 +160,8 @@
     #hero {
       position: relative;
       width: 100%;
-      height: 100dvh;
+      height: 100vh;
+      height: 100svh;
       min-height: 600px;
       overflow: hidden;
       border: 16px solid var(--cream);
@@ -230,6 +231,8 @@
       flex-direction: column;
       align-items: center;
       gap: 0;
+      padding: 16px;
+      box-sizing: border-box;
     }
     .hero-title-group {
       display: flex;
@@ -1399,6 +1402,61 @@
     #custom-itinerary .photo-grid .photo-tile:nth-child(2) img {
       object-position: center center;
     }
+    #custom-itinerary .testimonial-mark {
+      color: var(--dark);
+      opacity: 0.2;
+    }
+    #custom-itinerary .testimonial-quote {
+      color: rgba(26, 26, 20, 0.75);
+    }
+    #custom-itinerary .testimonial-divider {
+      background: var(--dark);
+      opacity: 0.2;
+    }
+    #custom-itinerary .testimonial-attr {
+      color: var(--text-dark);
+      opacity: 0.5;
+    }
+
+    /* ─── Testimonials ──────────────────────────────── */
+    .testimonial-block {
+      padding: 72px 64px 88px;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .testimonial-mark {
+      font-family: 'Sunday April', serif;
+      font-size: 5rem;
+      line-height: 0.5;
+      color: var(--gold);
+      opacity: 0.5;
+      display: block;
+      margin-bottom: 28px;
+      user-select: none;
+    }
+    .testimonial-quote {
+      font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+      line-height: 1.8;
+      color: rgba(240, 230, 211, 0.82);
+      font-style: italic;
+      margin-bottom: 36px;
+    }
+    .testimonial-divider {
+      width: 36px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.55;
+      margin: 0 auto 20px;
+    }
+    .testimonial-attr {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.85;
+    }
 
     /* ─── Contact ────────────────────────────────────── */
     #contact {
@@ -1978,6 +2036,8 @@
       }
       .lodge-panel .gallery-track { padding: 0 0 28px; }
       .gallery-hint { display: none; }
+      .testimonial-block { padding: 52px 24px 64px; }
+      .testimonial-mark { font-size: 3.5rem; }
       .lodges-label { padding: 0 24px; margin: 40px auto 14px; }
       .lodges-grid { padding: 0 0px; margin-top: 0; }
       .tanzania-header { padding: 0 24px 48px; }
@@ -2112,6 +2172,12 @@
       <div class="photo-tile">
         <img src="photos/safari/esirai-camp/ElizaPowell@EsiraiMarch22_2732.jpg" alt="Esirai camp in the trees" loading="lazy">
       </div>
+    </div>
+    <div class="testimonial-block reveal">
+      <span class="testimonial-mark">&ldquo;</span>
+      <p class="testimonial-quote">I can't imagine a better opportunity than getting to go on a wild adventure that will stretch you, getting to do that alongside like-minded travelers, and being led by an amazing family who calls the area their home and knows how to make the most of the time spent adventuring.</p>
+      <div class="testimonial-divider"></div>
+      <p class="testimonial-attr">Liz Thaete &nbsp;&middot;&nbsp; Group Traveler &nbsp;&middot;&nbsp; 2009</p>
     </div>
   </section>
 
@@ -2445,6 +2511,12 @@
       <div class="photo-tile">
         <img src="photos/about/group.png" alt="Travelers smiling together on the savanna in Tanzania" loading="lazy">
       </div>
+    </div>
+    <div class="testimonial-block reveal">
+      <span class="testimonial-mark">&ldquo;</span>
+      <p class="testimonial-quote">I would utterly and completely recommend Old Mountain. We wouldn't have known a thing about what we were doing, and they were so incredibly kind to build our itinerary. It was perfect — such an amazing trip. It's wonderful to have the inside scoop from people who have lived there, who know the culture, and who can open your eyes to so much more than what you could ever see on your own.</p>
+      <div class="testimonial-divider"></div>
+      <p class="testimonial-attr">Susie Eldredge &nbsp;&middot;&nbsp; Private Trip Client &nbsp;&middot;&nbsp; 2015</p>
     </div>
   </section>
 
