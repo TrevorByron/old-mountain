@@ -1415,9 +1415,10 @@
     #custom-itinerary .photo-grid .photo-tile:nth-child(2) img {
       object-position: center center;
     }
-    #custom-itinerary .testimonial-mark {
-      color: var(--dark);
-      opacity: 0.2;
+    #custom-itinerary .testimonial-blockquote .testimonial-quote::before,
+    #custom-itinerary .testimonial-blockquote .testimonial-quote::after {
+      color: var(--gold);
+      opacity: 0.72;
     }
     #custom-itinerary .testimonial-quote {
       color: rgba(26, 26, 20, 0.75);
@@ -1438,15 +1439,32 @@
       margin: 0 auto;
       text-align: center;
     }
-    .testimonial-mark {
+    .testimonial-blockquote {
+      margin: 0;
+      padding: 0;
+      border: none;
+      quotes: none;
+    }
+    .testimonial-blockquote .testimonial-quote::before,
+    .testimonial-blockquote .testimonial-quote::after {
       font-family: 'Sunday April', serif;
-      font-size: 5rem;
-      line-height: 0.5;
+      font-weight: 400;
+      font-size: clamp(2.35rem, 5.2vw, 4rem);
       color: var(--gold);
-      opacity: 0.5;
-      display: block;
-      margin-bottom: 28px;
+      opacity: 0.95;
+      line-height: 0;
+      display: inline-block;
+      vertical-align: -0.2em;
       user-select: none;
+    }
+    .testimonial-blockquote .testimonial-quote::before {
+      content: '\201C';
+      margin-right: 0.06em;
+      transform: translateX(-0.42em);
+    }
+    .testimonial-blockquote .testimonial-quote::after {
+      content: '\201D';
+      margin-left: 0.05em;
     }
     .testimonial-quote {
       font-size: clamp(1.05rem, 1.8vw, 1.3rem);
@@ -2058,7 +2076,10 @@
       .lodge-panel .gallery-track { padding: 0 0 28px; }
       .gallery-hint { display: none; }
       .testimonial-block { padding: 52px 24px 64px; }
-      .testimonial-mark { font-size: 3.5rem; }
+      .testimonial-blockquote .testimonial-quote::before,
+      .testimonial-blockquote .testimonial-quote::after {
+        font-size: clamp(2rem, 8.5vw, 3.35rem);
+      }
       .lodges-label { padding: 0 24px; margin: 40px auto 14px; }
       .lodges-grid { padding: 0 0px; margin-top: 0; }
       .tanzania-header { padding: 0 24px 48px; }
@@ -2196,8 +2217,9 @@
       </div>
     </div>
     <div class="testimonial-block reveal">
-      <span class="testimonial-mark">&ldquo;</span>
-      <p class="testimonial-quote">I can't imagine a better opportunity than getting to go on a wild adventure that will stretch you, getting to do that alongside like-minded travelers, and being led by an amazing family who calls the area their home and knows how to make the most of the time spent adventuring.</p>
+      <blockquote class="testimonial-blockquote">
+        <p class="testimonial-quote">I can't imagine a better opportunity than getting to go on a wild adventure that will stretch you, getting to do that alongside like-minded travelers, and being led by an amazing family who calls the area their home and knows how to make the most of the time spent adventuring.</p>
+      </blockquote>
       <div class="testimonial-divider"></div>
       <p class="testimonial-attr">Liz Thaete &nbsp;&middot;&nbsp; Group Traveler &nbsp;&middot;&nbsp; 2009</p>
     </div>
@@ -2535,8 +2557,9 @@
       </div>
     </div>
     <div class="testimonial-block reveal">
-      <span class="testimonial-mark">&ldquo;</span>
-      <p class="testimonial-quote">I would utterly and completely recommend Old Mountain. We wouldn't have known a thing about what we were doing, and they were so incredibly kind to build our itinerary. It was perfect — such an amazing trip. It's wonderful to have the inside scoop from people who have lived there, who know the culture, and who can open your eyes to so much more than what you could ever see on your own.</p>
+      <blockquote class="testimonial-blockquote">
+        <p class="testimonial-quote">I would utterly and completely recommend Old Mountain. We wouldn't have known a thing about what we were doing, and they were so incredibly kind to build our itinerary. It was perfect — such an amazing trip. It's wonderful to have the inside scoop from people who have lived there, who know the culture, and who can open your eyes to so much more than what you could ever see on your own.</p>
+      </blockquote>
       <div class="testimonial-divider"></div>
       <p class="testimonial-attr">Susie Eldredge &nbsp;&middot;&nbsp; Private Trip Client &nbsp;&middot;&nbsp; 2015</p>
     </div>
