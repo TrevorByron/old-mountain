@@ -60,7 +60,11 @@
 
     /* ─── Reset & Base ───────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      scroll-padding-top: 5.5rem;
+    }
     body {
       font-family: var(--sans);
       background: var(--dark);
@@ -115,6 +119,45 @@
       transition: opacity 0.25s;
     }
     .nav-links a:hover { opacity: 1; }
+    .nav-links a[data-nav-section] {
+      position: relative;
+      display: inline-block;
+      padding-bottom: 10px;
+    }
+    .nav-links a[data-nav-section] .nav-section-indicator {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: rgba(240, 230, 211, 0.14);
+      border-radius: 1px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .nav-links a[data-nav-section] .nav-section-indicator-fill {
+      display: block;
+      height: 100%;
+      width: 100%;
+      background: var(--gold);
+      border-radius: 1px;
+      transform: scaleX(var(--nav-progress, 0));
+      transform-origin: left center;
+      transition: transform 0.12s ease-out;
+      will-change: transform;
+    }
+    .nav-links a[data-nav-section].nav-section-active {
+      opacity: 1;
+    }
+    .nav-links a[data-nav-section].nav-section-active .nav-section-indicator {
+      opacity: 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .nav-links a[data-nav-section] .nav-section-indicator-fill {
+        transition: none;
+      }
+    }
     .nav-cta {
       font-size: 0.78rem;
       letter-spacing: 0.12em;
@@ -824,6 +867,26 @@
       transition: background 0.4s;
     }
     .photo-tile:hover::after { background: rgba(14,18,9,0.05); }
+
+    #about .photo-tile--dated {
+      z-index: 4;
+    }
+    #about .photo-date-tag {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      z-index: 5;
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dark);
+      background: rgba(244, 234, 215, 0.94);
+      padding: 5px 10px;
+      border: 1px solid rgba(26, 26, 20, 0.14);
+      box-shadow: 0 2px 10px rgba(15, 13, 9, 0.18);
+      pointer-events: none;
+    }
 
     /* Mirror of Tanzania grid: wide tile on the right, reversed row heights */
     .photo-grid--reversed {
@@ -2005,6 +2068,43 @@
         background: rgba(240, 230, 211, 0.08);
         opacity: 1;
       }
+      .mobile-nav-links a[data-nav-section] {
+        position: relative;
+        padding-bottom: 14px;
+      }
+      .mobile-nav-links a[data-nav-section] .nav-section-indicator {
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        bottom: 6px;
+        height: 2px;
+        background: rgba(240, 230, 211, 0.14);
+        border-radius: 1px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+      }
+      .mobile-nav-links a[data-nav-section] .nav-section-indicator-fill {
+        display: block;
+        height: 100%;
+        width: 100%;
+        background: var(--gold);
+        border-radius: 1px;
+        transform: scaleX(var(--nav-progress, 0));
+        transform-origin: left center;
+        transition: transform 0.12s ease-out;
+      }
+      .mobile-nav-links a[data-nav-section].nav-section-active {
+        opacity: 1;
+      }
+      .mobile-nav-links a[data-nav-section].nav-section-active .nav-section-indicator {
+        opacity: 1;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .mobile-nav-links a[data-nav-section] .nav-section-indicator-fill {
+          transition: none;
+        }
+      }
       .mobile-nav-cta {
         margin-top: 10px;
         display: inline-flex;
@@ -2106,9 +2206,9 @@
       <img src="logo/Logo.svg" alt="Old Mountain Tours and Explorations">
     </a>
     <ul class="nav-links">
-      <li><a href="#group-trips">2027 Group Trips</a></li>
-      <li><a href="#custom-itinerary">Custom Safaris</a></li>
-      <li><a href="#manifesto">About</a></li>
+      <li><a href="#group-trips" data-nav-section="group-trips">2027 Group Trips<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
+      <li><a href="#custom-itinerary" data-nav-section="custom-itinerary">Custom Safaris<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
+      <li><a href="#manifesto" data-nav-section="manifesto">About<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
     </ul>
     <a href="#" class="nav-cta open-intake-modal">Save your 2027 spot</a>
     <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-menu" aria-label="Open site menu">
@@ -2118,9 +2218,9 @@
     </button>
     <div class="mobile-nav-menu" id="mobile-nav-menu">
       <ul class="mobile-nav-links">
-        <li><a href="#group-trips">2027 Group Trips</a></li>
-        <li><a href="#custom-itinerary">Custom Safaris</a></li>
-        <li><a href="#manifesto">About</a></li>
+        <li><a href="#group-trips" data-nav-section="group-trips">2027 Group Trips<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
+        <li><a href="#custom-itinerary" data-nav-section="custom-itinerary">Custom Safaris<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
+        <li><a href="#manifesto" data-nav-section="manifesto">About<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
       </ul>
       <a href="#" class="mobile-nav-cta open-intake-modal">Save your 2027 spot</a>
     </div>
@@ -2615,17 +2715,21 @@
     <div class="about-grid">
       <div class="about-photo-side">
         <div class="photo-grid photo-grid--vertical reveal">
-          <div class="photo-tile">
-            <img src="photos/about/recent.png" alt="Jesse and Trevor on a beach ride in East Africa" loading="lazy">
+          <div class="photo-tile photo-tile--dated">
+            <img src="photos/about/motos.webp" alt="Jesse and Trevor with motorcycles in East Africa, 2007" loading="lazy">
+            <span class="photo-date-tag"><time datetime="2007">2007</time></span>
           </div>
-          <div class="photo-tile">
-            <img src="photos/about/childhood-trevor.png" alt="Jesse and Trevor as children in East Africa" loading="lazy">
+          <div class="photo-tile photo-tile--dated">
+            <img src="photos/about/childhood-trevor.png" alt="Jesse and Trevor as children in East Africa, 1994" loading="lazy">
+            <span class="photo-date-tag"><time datetime="1994">1994</time></span>
           </div>
-          <div class="photo-tile">
-            <img src="photos/about/birds.jpeg" alt="A young boy outdoors with a small bird and an open bird guide on his lap, East Africa" loading="lazy">
+          <div class="photo-tile photo-tile--dated">
+            <img src="photos/about/birds.jpeg" alt="A young boy outdoors with a small bird and an open bird guide on his lap, East Africa, 1997" loading="lazy">
+            <span class="photo-date-tag"><time datetime="1997">1997</time></span>
           </div>
-          <div class="photo-tile">
-            <img src="photos/about/goat.jpeg" alt="Jesse and Trevor smiling together at sunset in East Africa" loading="lazy">
+          <div class="photo-tile photo-tile--dated">
+            <img src="photos/about/goat.jpeg" alt="Jesse and Trevor smiling together at sunset in East Africa, 1999" loading="lazy">
+            <span class="photo-date-tag"><time datetime="1999">1999</time></span>
           </div>
           <div class="photo-tile">
             <img src="photos/about/bears.jpg" alt="Jesse and Trevor preparing motorcycles in East Africa" loading="lazy">
@@ -2759,14 +2863,79 @@
         closeMobileNavMenu();
       }
     });
+    const NAV_SECTION_IDS = ['group-trips', 'custom-itinerary', 'manifesto'];
+
+    function updateSectionNavHighlight() {
+      const navLinks = document.querySelectorAll('a[data-nav-section]');
+      const sections = NAV_SECTION_IDS.map(id => document.getElementById(id)).filter(Boolean);
+      if (!sections.length || !navLinks.length) return;
+
+      const probe = window.scrollY + nav.offsetHeight + 12;
+      let activeIdx = -1;
+
+      for (let i = 0; i < sections.length; i++) {
+        const el = sections[i];
+        const rect = el.getBoundingClientRect();
+        const top = window.scrollY + rect.top;
+        const bottom = top + rect.height;
+        if (probe >= top && probe < bottom) {
+          activeIdx = i;
+          break;
+        }
+      }
+
+      if (activeIdx === -1) {
+        for (let i = sections.length - 1; i >= 0; i--) {
+          const el = sections[i];
+          const top = window.scrollY + el.getBoundingClientRect().top;
+          if (probe >= top) {
+            activeIdx = i;
+            break;
+          }
+        }
+      }
+
+      navLinks.forEach(a => {
+        const id = a.getAttribute('data-nav-section');
+        const idx = NAV_SECTION_IDS.indexOf(id);
+        const active = idx === activeIdx && activeIdx >= 0;
+        a.classList.toggle('nav-section-active', active);
+        if (active && sections[activeIdx]) {
+          const el = sections[activeIdx];
+          const rect = el.getBoundingClientRect();
+          const top = window.scrollY + rect.top;
+          const h = Math.max(rect.height, 1);
+          const p = Math.min(Math.max((probe - top) / h, 0), 1);
+          a.style.setProperty('--nav-progress', p.toFixed(4));
+          if (a.closest('.nav-links')) {
+            a.setAttribute('aria-current', 'location');
+          }
+        } else {
+          a.style.removeProperty('--nav-progress');
+          a.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    let navScrollFrame = null;
     const updateNavState = () => {
       const pastHero = window.scrollY >= hero.offsetHeight;
       nav.classList.toggle('visible', pastHero);
       nav.classList.toggle('scrolled', pastHero);
+      updateSectionNavHighlight();
+    };
+    const queueNavUpdate = () => {
+      if (navScrollFrame != null) return;
+      navScrollFrame = requestAnimationFrame(() => {
+        navScrollFrame = null;
+        updateNavState();
+      });
     };
     updateNavState();
-    window.addEventListener('scroll', updateNavState, { passive: true });
-    window.addEventListener('resize', updateNavState);
+    window.addEventListener('scroll', queueNavUpdate, { passive: true });
+    window.addEventListener('resize', () => {
+      queueNavUpdate();
+    });
 
     // ── Scroll reveal ──────────────────────────────────
     const revealEls = document.querySelectorAll('.reveal');
