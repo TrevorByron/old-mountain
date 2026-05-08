@@ -185,6 +185,8 @@
       transform: translate(2px, -3px);
     }
     .nav-cta {
+      flex: 0 1 auto;
+      min-width: 0;
       font-size: 0.78rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -193,6 +195,12 @@
       color: var(--cream);
       border-radius: 100px;
       transition: background 0.25s, border-color 0.25s;
+      text-align: center;
+      /* Wrap only once flex lays out less width than one line (min-width:0 allows shrink). */
+      overflow-wrap: break-word;
+    }
+    .nav-cta-text-short {
+      display: none;
     }
     .nav-cta:hover {
       background: var(--cream);
@@ -2005,6 +2013,8 @@
       nav { padding: 24px 32px; }
       nav.scrolled { padding: 14px 32px; }
       .nav-links { gap: 24px; }
+      .nav-cta-text-full { display: none; }
+      .nav-cta-text-short { display: inline; }
       .container { padding: 0 32px; }
       .hero-content { padding: 0 clamp(32px, 6vw, 72px) 60px; }
       .manifesto-values { grid-template-columns: 1fr; }
@@ -2074,10 +2084,20 @@
       .footer-top { flex-direction: column; gap: 32px; text-align: center; }
       .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
     }
+    @media (max-width: 840px) {
+      /* Narrow desktop/tablet bar: drop logo, left-align links (mobile restores logo at 640px) */
+      .nav-logo { display: none; }
+      .nav-links { margin-right: auto; }
+    }
     @media (max-width: 640px) {
       nav { padding: 12px 16px; }
       nav.scrolled { padding: 10px 16px; }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+      }
       .nav-logo img { height: 32px; }
+      .nav-links { margin-right: 0; }
       .nav-links, .nav-cta { display: none; }
       .nav-menu-toggle { display: inline-flex; }
       .mobile-nav-menu {
@@ -2191,13 +2211,21 @@
       #about .about-photo-side { height: auto; min-height: 0; }
       .photo-grid { grid-template-columns: 1fr; grid-template-rows: 300px 240px 240px; }
       .photo-tile:nth-child(n+4) { display: none; }
-      .photo-grid--vertical {
+      /* About strip: only childhood (1994) + bottom bears photo on small screens */
+      #about .photo-grid--vertical > .photo-tile:nth-child(5) {
+        display: block;
+      }
+      #about .photo-grid--vertical {
         grid-template-columns: 1fr;
         grid-template-rows: minmax(200px, 42vh) minmax(180px, 36vh);
       }
-      .photo-grid--vertical .photo-tile:nth-child(n+3) { display: none; }
-      .photo-grid--vertical .photo-tile:first-child,
-      .photo-grid--vertical .photo-tile:nth-child(2) {
+      #about .photo-grid--vertical > .photo-tile:nth-child(1),
+      #about .photo-grid--vertical > .photo-tile:nth-child(3),
+      #about .photo-grid--vertical > .photo-tile:nth-child(4) {
+        display: none;
+      }
+      #about .photo-grid--vertical > .photo-tile:nth-child(2),
+      #about .photo-grid--vertical > .photo-tile:nth-child(5) {
         grid-column: 1;
         grid-row: auto;
       }
@@ -2248,7 +2276,7 @@
       <li><a href="#custom-itinerary" data-nav-section="custom-itinerary">Custom Safaris<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
       <li><a href="/about" class="nav-link-external">About<span class="nav-link-external-arrow" aria-hidden="true">&#8599;</span></a></li>
     </ul>
-    <a href="#" class="nav-cta open-intake-modal">Save your 2027 spot</a>
+    <a href="#" class="nav-cta open-intake-modal"><span class="nav-cta-text-full">Save your 2027 spot</span><span class="nav-cta-text-short">Save your spot</span></a>
     <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-menu" aria-label="Open site menu">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
@@ -2309,7 +2337,7 @@
   <section id="manifesto">
     <div class="manifesto-intro tanzania-header">
       <div class="reveal">
-        <p class="section-kicker">About</p>
+        <p class="section-kicker">meet</p>
         <h2 class="section-title">Your guides</h2>
         <p class="section-subline">Organizing and guiding since 2009</p>
       </div>
