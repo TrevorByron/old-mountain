@@ -83,7 +83,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 28px 48px;
+      gap: 24px;
+      padding: 28px 40px;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
@@ -98,7 +99,7 @@
       background: rgba(14, 18, 9, 0.88);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      padding: 16px 48px;
+      padding: 16px 40px;
       border-bottom: 1px solid rgba(240, 230, 211, 0.08);
     }
     .nav-logo img {
@@ -107,15 +108,17 @@
     }
     .nav-links {
       display: flex;
-      gap: 40px;
+      align-items: center;
+      gap: 28px;
       list-style: none;
     }
     .nav-links a {
       font-size: 0.78rem;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.14em;
       text-transform: none;
       color: var(--cream);
       opacity: 0.8;
+      white-space: nowrap;
       transition: opacity 0.25s;
     }
     .nav-links a:hover { opacity: 1; }
@@ -157,6 +160,29 @@
       .nav-links a[data-nav-section] .nav-section-indicator-fill {
         transition: none;
       }
+    }
+    .nav-links a.nav-link-external {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.12em;
+      font-style: italic;
+      color: var(--gold);
+      opacity: 0.92;
+    }
+    .nav-links a.nav-link-external:hover {
+      opacity: 1;
+    }
+    .nav-link-external-arrow {
+      display: inline-block;
+      font-style: normal;
+      font-size: 0.9em;
+      line-height: 1;
+      transform: translateY(-1px);
+      transition: transform 0.2s ease;
+    }
+    .nav-links a.nav-link-external:hover .nav-link-external-arrow {
+      transform: translate(2px, -3px);
     }
     .nav-cta {
       font-size: 0.78rem;
@@ -2099,40 +2125,20 @@
       }
       .mobile-nav-links a[data-nav-section] {
         position: relative;
-        padding-bottom: 14px;
       }
       .mobile-nav-links a[data-nav-section] .nav-section-indicator {
-        position: absolute;
-        left: 10px;
-        right: 10px;
-        bottom: 6px;
-        height: 2px;
-        background: rgba(240, 230, 211, 0.14);
-        border-radius: 1px;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.25s ease;
-      }
-      .mobile-nav-links a[data-nav-section] .nav-section-indicator-fill {
-        display: block;
-        height: 100%;
-        width: 100%;
-        background: var(--gold);
-        border-radius: 1px;
-        transform: scaleX(var(--nav-progress, 0));
-        transform-origin: left center;
-        transition: transform 0.12s ease-out;
+        display: none;
       }
       .mobile-nav-links a[data-nav-section].nav-section-active {
         opacity: 1;
       }
-      .mobile-nav-links a[data-nav-section].nav-section-active .nav-section-indicator {
-        opacity: 1;
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .mobile-nav-links a[data-nav-section] .nav-section-indicator-fill {
-          transition: none;
-        }
+      .mobile-nav-links a.nav-link-external {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--gold);
+        font-style: italic;
+        opacity: 0.92;
       }
       .mobile-nav-cta {
         margin-top: 10px;
@@ -2237,7 +2243,8 @@
     <ul class="nav-links">
       <li><a href="#group-trips" data-nav-section="group-trips">2027 Group Trips<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
       <li><a href="#custom-itinerary" data-nav-section="custom-itinerary">Custom Safaris<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
-      <li><a href="#manifesto" data-nav-section="manifesto">About<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
+      <li><a href="#manifesto" data-nav-section="manifesto">Your guides<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
+      <li><a href="/about" class="nav-link-external">Origin Story<span class="nav-link-external-arrow" aria-hidden="true">&#8599;</span></a></li>
     </ul>
     <a href="#" class="nav-cta open-intake-modal">Save your 2027 spot</a>
     <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-menu" aria-label="Open site menu">
@@ -2249,7 +2256,8 @@
       <ul class="mobile-nav-links">
         <li><a href="#group-trips" data-nav-section="group-trips">2027 Group Trips<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
         <li><a href="#custom-itinerary" data-nav-section="custom-itinerary">Custom Safaris<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
-        <li><a href="#manifesto" data-nav-section="manifesto">About<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
+        <li><a href="#manifesto" data-nav-section="manifesto">Your guides<span class="nav-section-indicator" aria-hidden="true"><span class="nav-section-indicator-fill"></span></span></a></li>
+        <li><a href="/about" class="nav-link-external">Origin Story<span class="nav-link-external-arrow" aria-hidden="true">&#8599;</span></a></li>
       </ul>
       <a href="#" class="mobile-nav-cta open-intake-modal">Save your 2027 spot</a>
     </div>
@@ -2700,7 +2708,7 @@
     <div class="manifesto-intro tanzania-header">
       <div class="reveal">
         <p class="section-kicker">About</p>
-        <h2 class="section-title">About us</h2>
+        <h2 class="section-title">Your guides</h2>
         <p class="section-subline">Organizing and guiding since 2009</p>
       </div>
       <div class="tanzania-copy">
