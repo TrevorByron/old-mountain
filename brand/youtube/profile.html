@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube Profile · Old Mountain</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 800px;
+      height: 800px;
+      overflow: hidden;
+      background: #0E1209;
+    }
+    .canvas {
+      width: 800px;
+      height: 800px;
+      background: #0E1209;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bg-ring {
+      position: absolute;
+      width: 680px;
+      height: 680px;
+      border-radius: 50%;
+      border: 1px solid rgba(240,230,211,0.06);
+    }
+    .bg-ring-2 {
+      width: 540px;
+      height: 540px;
+      border-color: rgba(196,169,107,0.08);
+    }
+    .logo {
+      width: 340px;
+      position: relative;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="bg-ring"></div>
+    <div class="bg-ring bg-ring-2"></div>
+    <img class="logo" src="../../logo/Logo.svg" alt="Old Mountain">
+  </div>
+</body>
+</html>

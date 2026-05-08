@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Instagram Highlight Covers · Old Mountain</title>
+  <style>
+    @font-face {
+      font-family: 'Chainprinter';
+      src: url('../../fonts/chainprinter/chainprinter-regular.woff') format('woff');
+    }
+    @font-face {
+      font-family: 'awan-zaman';
+      src: url('../../fonts/awan-zaman/awan-zaman-regular.woff') format('woff');
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      background: #141A10;
+      font-family: system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      padding: 40px;
+    }
+
+    h1 {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(240,230,211,0.35);
+      margin-bottom: 8px;
+    }
+    .sub {
+      font-size: 0.82rem;
+      color: rgba(240,230,211,0.25);
+      margin-bottom: 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+      max-width: 1300px;
+    }
+
+    .highlight-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .highlight-label {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(240,230,211,0.38);
+    }
+
+    /* ── The actual highlight cover ── */
+    /* Full canvas is 1080x1920 but Instagram shows only a centered 400x400 circle.
+       We preview at 240px circle (scale 0.6x) */
+    .hl-canvas {
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Individual backgrounds */
+    .hl-trips    { background: radial-gradient(circle at center, #2C3A22 0%, #0E1209 70%); }
+    .hl-custom   { background: radial-gradient(circle at center, #1a2a16 0%, #0E1209 70%); }
+    .hl-guides   { background: radial-gradient(circle at center, #1e1a10 0%, #0E1209 70%); }
+    .hl-about    { background: radial-gradient(circle at center, #0f1a0b 0%, #0E1209 70%); }
+    .hl-tanzania { background: radial-gradient(circle at center, #1a2213 0%, #0E1209 70%); }
+
+    .hl-icon svg {
+      width: 64px;
+      height: 64px;
+    }
+    .hl-text {
+      font-family: 'Chainprinter', monospace;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(240,230,211,0.5);
+      text-align: center;
+    }
+
+    /* ── Export note ── */
+    .export-note {
+      margin-top: 48px;
+      max-width: 900px;
+      background: rgba(196,169,107,0.07);
+      border: 1px solid rgba(196,169,107,0.15);
+      border-radius: 4px;
+      padding: 24px 28px;
+    }
+    .export-note h2 {
+      font-family: 'Chainprinter', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #C4A96B;
+      margin-bottom: 10px;
+    }
+    .export-note p {
+      font-size: 0.82rem;
+      color: rgba(240,230,211,0.45);
+      line-height: 1.6;
+    }
+    .export-note code {
+      background: rgba(240,230,211,0.08);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.8em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Instagram Highlight Covers</h1>
+  <p class="sub">Preview shown at 240px. Export each at 1080×1920px — only the centered circle will be visible.</p>
+
+  <div class="grid">
+
+    <!-- 1. Group Trips -->
+    <div class="highlight-wrap">
+      <div class="hl-canvas hl-trips">
+        <div class="hl-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Compass / star -->
+            <circle cx="32" cy="32" r="24" stroke="#C4A96B" stroke-width="1.5" opacity="0.3"/>
+            <path d="M32 12L36 28L52 32L36 36L32 52L28 36L12 32L28 28L32 12Z" stroke="#C4A96B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="hl-text">2027<br>Trips</p>
+      </div>
+      <p class="highlight-label">2027 Trips</p>
+    </div>
+
+    <!-- 2. Tanzania -->
+    <div class="highlight-wrap">
+      <div class="hl-canvas hl-tanzania">
+        <div class="hl-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Mountains -->
+            <circle cx="32" cy="32" r="24" stroke="#C4A96B" stroke-width="1.5" opacity="0.3"/>
+            <path d="M12 46L24 24L32 34L42 18L52 46H12Z" stroke="#C4A96B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M29 46L32 34L35 46" stroke="#C4A96B" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+        </div>
+        <p class="hl-text">Tanzania</p>
+      </div>
+      <p class="highlight-label">Tanzania</p>
+    </div>
+
+    <!-- 3. Custom Safaris -->
+    <div class="highlight-wrap">
+      <div class="hl-canvas hl-custom">
+        <div class="hl-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Route / path -->
+            <circle cx="32" cy="32" r="24" stroke="#C4A96B" stroke-width="1.5" opacity="0.3"/>
+            <circle cx="18" cy="44" r="3" stroke="#C4A96B" stroke-width="1.8"/>
+            <circle cx="46" cy="20" r="3" stroke="#C4A96B" stroke-width="1.8"/>
+            <path d="M18 44C18 44 18 30 28 26C38 22 46 20 46 20" stroke="#C4A96B" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="3 4"/>
+          </svg>
+        </div>
+        <p class="hl-text">Custom<br>Safaris</p>
+      </div>
+      <p class="highlight-label">Custom</p>
+    </div>
+
+    <!-- 4. Guides / About -->
+    <div class="highlight-wrap">
+      <div class="hl-canvas hl-guides">
+        <div class="hl-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Two people -->
+            <circle cx="32" cy="32" r="24" stroke="#C4A96B" stroke-width="1.5" opacity="0.3"/>
+            <circle cx="24" cy="24" r="5.5" stroke="#C4A96B" stroke-width="1.8"/>
+            <circle cx="40" cy="24" r="5.5" stroke="#C4A96B" stroke-width="1.8"/>
+            <path d="M13 46c1-6 5-9 11-9" stroke="#C4A96B" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M51 46c-1-6-5-9-11-9" stroke="#C4A96B" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M22 46c1.2-5 4.6-8 10-8s8.8 3 10 8" stroke="#C4A96B" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p class="hl-text">Guides</p>
+      </div>
+      <p class="highlight-label">Guides</p>
+    </div>
+
+    <!-- 5. Reviews -->
+    <div class="highlight-wrap">
+      <div class="hl-canvas hl-about">
+        <div class="hl-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Quote mark -->
+            <circle cx="32" cy="32" r="24" stroke="#C4A96B" stroke-width="1.5" opacity="0.3"/>
+            <path d="M18 38V30a8 8 0 018-8v4a4 4 0 00-4 4v8h-4Z" stroke="#C4A96B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M34 38V30a8 8 0 018-8v4a4 4 0 00-4 4v8h-4Z" stroke="#C4A96B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="hl-text">Reviews</p>
+      </div>
+      <p class="highlight-label">Reviews</p>
+    </div>
+
+  </div>
+
+  <div class="export-note">
+    <h2>How to export these for Instagram</h2>
+    <p>
+      Open each highlight in Chrome DevTools at <code>1080 × 1920px</code>. The icon and text are centered at the exact position Instagram will crop to its circle. Capture a full-size screenshot, then upload in Instagram &rarr; Profile &rarr; New Highlight &rarr; Edit Cover. The circle crop will naturally frame the centered icon. You can also build these in Canva at 1080×1920 with the icon centered at x=540 y=960.
+    </p>
+  </div>
+
+  <!-- ── Individual full-size canvases for export ──────── -->
+  <!-- Uncomment the one you want to screenshot at 1080×1920 in DevTools -->
+
+  <!--
+  <div style="width:1080px; height:1920px; background: radial-gradient(circle at center, #2C3A22 10%, #0E1209 55%); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:24px; position:fixed; top:0; left:0; z-index:999;">
+    <svg width="160" height="160" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="24" stroke="#C4A96B" stroke-width="1.5" opacity="0.3"/><path d="M32 12L36 28L52 32L36 36L32 52L28 36L12 32L28 28L32 12Z" stroke="#C4A96B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <p style="font-family:'Chainprinter',monospace; font-size:32px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(240,230,211,0.45); text-align:center;">2027<br>Trips</p>
+  </div>
+  -->
+
+</body>
+</html>
