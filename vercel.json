@@ -1,4 +1,8 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/about", "destination": "/bios", "permanent": true },
+    { "source": "/about/", "destination": "/bios", "permanent": true }
+  ]
 }
